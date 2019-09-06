@@ -9,7 +9,8 @@ class ClimbingTrainingForm extends React.Component {
     gradeRef = React.createRef();
     movementsRef = React.createRef();
     typeRef = React.createRef();
-    restTimeRef = React.createRef();
+	restTimeRef = React.createRef();
+	dateRef = React.createRef();
 
     createRoute = (event) => {
     	event.preventDefault();
@@ -19,7 +20,8 @@ class ClimbingTrainingForm extends React.Component {
     		grade: this.gradeRef.current.value,
     		movements: this.movementsRef.current.value,
     		type: this.typeRef.current.value,
-    		restTime: this.restTimeRef.current.value
+			restTime: this.restTimeRef.current.value,
+			date: this.dateRef.current.value
 		};
 		
 			this.props.addRoute(route);
@@ -31,6 +33,7 @@ class ClimbingTrainingForm extends React.Component {
     render() {
     	return (
     		<form className="route-edit" onSubmit={this.createRoute}>
+				<input name="date" ref={this.dateRef} type="date" />
     			<input name="name" ref={this.nameRef} type="text" placeholder="Name"/>
     			<input name="grade" ref={this.gradeRef} type="text" placeholder="Grade"/>
     			<input name="movements" ref={this.movementsRef} type="number" placeholder="Movements"/>
