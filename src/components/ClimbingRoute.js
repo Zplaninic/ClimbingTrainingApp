@@ -3,16 +3,17 @@ import React, { Component } from 'react';
 
 class ClimbingRoute extends Component {
 	render() {
-		const { grade, movements, name, restTime, type } = this.props.routeDetails;
+		const { grade, movements, name, restTime, type, date } = this.props.routeDetails;
 
 		return (
-			<li className="route">
-				<h4>{name}</h4>
-				<p>{grade}</p>
-				<p>{movements}</p>
-				<p>{type}</p>
-				<p>{restTime}</p>
-			</li>
+			<ul className="route">
+				<li><p>{date}</p></li>
+				<li><h4>{name}</h4></li>
+				<li><p>{grade}</p></li>
+				<li><p>{movements}</p></li>
+				<li><p>{type}</p></li>
+				<li><p>{restTime}</p></li>
+			</ul>
 		);
 	}
 }
