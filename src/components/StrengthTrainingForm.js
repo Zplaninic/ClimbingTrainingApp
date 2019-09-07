@@ -1,4 +1,6 @@
 import React from 'react';
+import Button from '../css/elements/Button'
+
 
 class StrengthTrainingForm extends React.Component {
 
@@ -35,7 +37,7 @@ class StrengthTrainingForm extends React.Component {
     			<input name="sets" ref={this.setsRef} type="number" placeholder="Sets"/>
     			<input name="reps" ref={this.repsRef} type="number" placeholder="Repetitions"/>
                 <input name="rest" ref={this.restRef} type="number" placeholder="Rest time"/>
-    			<button type="submit">Add Route</button>
+    			<Button type="submit">Add Route</Button>
 
             </form>
 		);

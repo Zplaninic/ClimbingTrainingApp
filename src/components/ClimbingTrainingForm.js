@@ -1,7 +1,9 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable class-methods-use-this */
 import React from 'react';
-import ReactDOM from 'react-dom'
+import Button from '../css/elements/Button'
+
+
 
 class ClimbingTrainingForm extends React.Component {
 
@@ -42,7 +44,7 @@ class ClimbingTrainingForm extends React.Component {
     				<option value="route">Route</option>
     			</select>
     			<input name="rest" ref={this.restTimeRef} type="text" placeholder="Rest time (seconds)"/>
-    			<button type="submit">Add Route</button>
+    			<Button type="submit">Add Route</Button>
     		</form>
     	);
     }

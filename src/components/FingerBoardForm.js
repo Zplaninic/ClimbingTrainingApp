@@ -1,5 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
+import Button from '../css/elements/Button'
+
 
 class FingerBoardForm extends Component {
 	onSubmit = false;
@@ -26,7 +28,7 @@ class FingerBoardForm extends Component {
 	}
 
 	render() {
-		const addButton = (!this.onSubmit) ? <button type="submit">Add Session</button> : null;
+		const addButton = (!this.onSubmit) ? <Button type="submit">Add Session</Button> : null;
 
 		return (
 			<form className="fingerboard-training" onSubmit={this.createSession}>
