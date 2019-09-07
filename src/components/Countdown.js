@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import '../css/countdown.css'
+import Button from '../css/elements/Button'
 
 class Countdown extends Component {
 	state = {
@@ -92,38 +93,38 @@ class Countdown extends Component {
 				<div className="Countdown-header">Sets</div>
 				<div className="Countdown-header">Number of Sets</div>
 				<div className="Countdown-display">
-					<button onClick={() => this.adjustSets("incSets")}>&#8679;</button>
+					<Button onClick={() => this.adjustSets("incSets")}>&#8679;</Button>
 
 					<div className="Countdown-time">{setsTime}</div> 
 
-					<button onClick={() => this.adjustSets("decSets")}>&#8681;</button>
+					<Button onClick={() => this.adjustSets("decSets")}>&#8681;</Button>
 				</div>
 
 
 				<div className="Countdown-header">Work Interval</div>
 				<div className="Countdown-label">Minutes : Seconds</div>
 				<div className="Countdown-display">
-					<button onClick={() => this.adjustTimer("incMinutes")}>&#8679;</button>
-					<button onClick={() => this.adjustTimer("incSeconds")}>&#8679;</button>
+					<Button onClick={() => this.adjustTimer("incMinutes")}>&#8679;</Button>
+					<Button onClick={() => this.adjustTimer("incSeconds")}>&#8679;</Button>
 
 					<div className="Countdown-time">{minutes} : {seconds}</div> 
 
-					<button onClick={() => this.adjustTimer("decMinutes")}>&#8681;</button>
-					<button onClick={() => this.adjustTimer("decSeconds")}>&#8681;</button>
+					<Button onClick={() => this.adjustTimer("decMinutes")}>&#8681;</Button>
+					<Button onClick={() => this.adjustTimer("decSeconds")}>&#8681;</Button>
 				</div>
 
 				{timerOn === false && (timerStart === 0) && (
-					<button onClick={this.startTimer}>Start</button>
+					<Button onClick={this.startTimer}>Start</Button>
 				)}
 
 				{timerOn === true && timerTime >= 1000 && (
-					<button onClick={this.stopTimer}>Stop</button>
+					<Button onClick={this.stopTimer}>Stop</Button>
 				)}
 
 				{timerOn === false &&
 					(timerStart !== 0 && timerStart !== timerTime && timerTime !== 0) && (
 						<b>
-							<button onClick={this.startTimer}>Resume</button>
+							<Button onClick={this.startTimer}>Resume</Button>
 						</b>
 						
 				)}

@@ -2,6 +2,7 @@
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import msToTime from '../helper';
+import Button from '../css/elements/Button';
 
 class Timer extends Component {
 	state = {
@@ -34,16 +35,16 @@ class Timer extends Component {
     	const { time, isOn } = this.state;
 
     	const start = (time === 0) ?
-    		<button onClick={this.startTimer}>start</button> :
+    		<Button onClick={this.startTimer}>start </Button> :
     		null;
 	  	const stop = (isOn) ?
-    		<button onClick={this.stopTimer}>stop</button> :
+    		<Button onClick={this.stopTimer}>stop </Button> :
     		null;
 	  	const reset = (time !== 0 && !isOn) ?
-    		<button onClick={this.resetTimer}>reset</button> :
+    		<Button onClick={this.resetTimer}>reset </Button> :
     		null;
 	  	const resume = (time !== 0 && !isOn) ?
-    		<button onClick={this.startTimer}>resume</button> :
+    		<Button onClick={this.startTimer}>resume </Button> :
     		null;
 
     	return (
