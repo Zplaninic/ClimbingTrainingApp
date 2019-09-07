@@ -21,7 +21,7 @@ class Strength extends Component {
 	render() {
 		return (
 			<div className="strength-training">
-				<h1>Strength training</h1>
+				<h2>STRENGTH TRAINING</h2>
 				<StrengthTrainingForm addExercise={this.addExercise}/>
 				<ul className="exercises">
 					{Object.keys(this.state.exercises).map(key => <StrengthExercise key={key} exerciseDetails={this.state.exercises[key]}/>)}
@@ -30,5 +30,6 @@ class Strength extends Component {
 		);
 	}
 }
+
 
 export default Strength;

@@ -1,5 +1,6 @@
 import React from 'react';
-import Button from '../css/elements/Button'
+import Button from '../css/elements/Button';
+import { Form, Input, Select} from '../css/elements/FormInput';
 
 
 class StrengthTrainingForm extends React.Component {
@@ -30,16 +31,20 @@ class StrengthTrainingForm extends React.Component {
 	
     render() {
 		return (
-            <form className="strength-exercise" onSubmit={this.createExercise}>
-				<input name="date" ref={this.dateRef} type="date" />
-                <input name="name" ref={this.nameRef} type="text" placeholder="Name"/>
-    			<input name="type" ref={this.typeRef} type="text" placeholder="Type of exercise(antagonist, core.."/>
-    			<input name="sets" ref={this.setsRef} type="number" placeholder="Sets"/>
-    			<input name="reps" ref={this.repsRef} type="number" placeholder="Repetitions"/>
-                <input name="rest" ref={this.restRef} type="number" placeholder="Rest time"/>
+            <Form className="strength-exercise" onSubmit={this.createExercise}>
+				<Input name="date" ref={this.dateRef} type="date" />
+				<Select ref={this.nameRef}>
+						<option value="antagonist" >Antagonist</option>
+						<option value="core">Core</option>
+						<option value="upperBoady">Upper body</option>
+						<option value="flexibility">Flexibility</option>
+				</Select>
+    			<Input name="type" ref={this.typeRef} type="text" placeholder="Exercise"/>
+    			<Input name="sets" ref={this.setsRef} type="number" placeholder="Sets"/>
+    			<Input name="reps" ref={this.repsRef} type="number" placeholder="Repetitions"/>
+                <Input name="rest" ref={this.restRef} type="number" placeholder="Rest time"/>
     			<Button type="submit">Add Route</Button>
-
-            </form>
+            </Form>
 		);
 	}
 }
