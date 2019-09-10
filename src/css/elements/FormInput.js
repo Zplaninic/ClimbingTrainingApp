@@ -5,6 +5,7 @@ export const Form = styled.form `
     flex-wrap: wrap;
     justify-content: center; 
     width: 25%;
+    min-width: 150px;
 `
 export const Input = styled.input `
     width: 100%;
