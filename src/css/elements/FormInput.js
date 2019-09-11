@@ -14,13 +14,14 @@ export const Input = styled.input `
     margin-bottom: 10px;
     border-radius: 5px;
     border-width: 1px;
-    border-color: rgb(166, 166, 166);
+    border-color: ${(props) => (props.primary ?  'red' : '#a6a6a6')};
 `
 export const Select = styled.select `
     width: 100%;
     text-align: center;
     border-style: solid;
     margin-bottom: 10px;
+    border-color: '#a6a6a6';
 `
 export const Option = styled.option `
     text-align: center;

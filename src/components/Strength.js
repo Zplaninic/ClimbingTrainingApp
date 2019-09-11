@@ -5,7 +5,8 @@ import StrengthExercise from './StrengthExercise';
 
 class Strength extends Component {
 	state = {
-		exercises: {}
+		exercises: {},
+		date: {}
 	}
 
 	addExercise = (exercise) => {
@@ -18,11 +19,19 @@ class Strength extends Component {
 		});
 	}
 
+	addDate = (date) => {
+
+		this.setState({
+			date: date
+		})
+	}
+
+
 	render() {
 		return (
 			<div className="strength-training">
 				<h2>STRENGTH TRAINING</h2>
-				<StrengthTrainingForm addExercise={this.addExercise}/>
+				<StrengthTrainingForm addExercise={this.addExercise} addDate={this.addDate} {...this.state}/>
 				<ul className="exercises">
 					{Object.keys(this.state.exercises).map(key => <StrengthExercise key={key} exerciseDetails={this.state.exercises[key]}/>)}
 				</ul>
