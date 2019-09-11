@@ -2,6 +2,9 @@ import React from 'react';
 import Button from '../css/elements/Button';
 import { Form, Input, Select} from '../css/elements/FormInput';
 
+function validate(date) {
+	return Object.values(date).length === 0;
+}
 
 class StrengthTrainingForm extends React.Component {
 
@@ -13,6 +16,7 @@ class StrengthTrainingForm extends React.Component {
 	dateRef = React.createRef();
 
 	createExercise = (event) => {
+
 		event.preventDefault();
 
 		const exercise = {
@@ -23,28 +27,51 @@ class StrengthTrainingForm extends React.Component {
 			rest: this.restRef.current.value,
 			date: this.dateRef.current.value
 		};
-		
-			this.props.addExercise(exercise);
 
-			event.currentTarget.reset();
+		if(!exercise.type || !exercise.date) {
+			return;
+		}
+
+		this.props.addExercise(exercise);
+
+		event.currentTarget.reset();
+
 	}
-	
+s
+	createDate = (event) => {
+		event.preventDefault();
+
+		const date = event.target.value;
+
+		this.props.addDate(date);
+
+	}
+
     render() {
+		const error = validate(this.props.date)
+		console.log(error);
+
 		return (
-            <Form className="strength-exercise" onSubmit={this.createExercise}>
-				<Input name="date" ref={this.dateRef} type="date" />
-				<Select ref={this.nameRef}>
-						<option value="antagonist" >Antagonist</option>
-						<option value="core">Core</option>
-						<option value="upperBoady">Upper body</option>
-						<option value="flexibility">Flexibility</option>
-				</Select>
-    			<Input name="type" ref={this.typeRef} type="text" placeholder="Exercise"/>
-    			<Input name="sets" ref={this.setsRef} type="number" placeholder="Sets"/>
-    			<Input name="reps" ref={this.repsRef} type="number" placeholder="Repetitions"/>
-                <Input name="rest" ref={this.restRef} type="number" placeholder="Rest time"/>
-    			<Button type="submit">Add Route</Button>
-            </Form>
+			<React.Fragment>
+				<Form className="date-picker">
+					{error === true && <p>Input date</p>}
+					<Input primary={error} name="date" type="date" ref={this.dateRef} onChange={this.createDate}/>
+				</Form>
+				<Form className="strength-exercise" onSubmit={this.createExercise}>
+					<Select ref={this.nameRef}>
+							<option value="antagonist" >Antagonist</option>
+							<option value="core">Core</option>
+							<option value="upperBoady">Upper body</option>
+							<option value="flexibility">Flexibility</option>
+					</Select>
+					<Input name="type" ref={this.typeRef} type="text" placeholder="Exercise" required/>
+					<Input name="sets" ref={this.setsRef} type="number" min="0" defaultValue="0" placeholder="Sets"/>
+					<Input name="reps" ref={this.repsRef} type="number" min="0" defaultValue="0" placeholder="Repetitions"/>
+					<Input name="rest" ref={this.restRef} type="number" min="0" defaultValue="0" placeholder="Rest time"/>
+					<Button type="submit">Add Route</Button>
+				</Form>
+
+			</React.Fragment>
 		);
 	}
 }
