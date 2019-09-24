@@ -7,7 +7,8 @@ import Timer from './Timer';
 
 class Climbing extends Component {
 	state = {
-		routes: {}
+		routes: {},
+		date: {}
 	}
 
 	addRoute = (route) => {
@@ -20,12 +21,19 @@ class Climbing extends Component {
 		});
 	}
 
+	addDate = (date) => {
+
+		this.setState({
+			date: date
+		})
+	}
+
 	render() {
 		return (
 			<div className="training-program">
 				<h1>Climbing training</h1>
 				<h3>{this.props.tagline}</h3>
-				<ClimbingTrainingForm addRoute={this.addRoute} />
+				<ClimbingTrainingForm addRoute={this.addRoute} addDate={this.addDate} {...this.state}/>
 				<ul className="routes">
 					{Object.keys(this.state.routes).map(key => <ClimbingRoute key={key} routeDetails={this.state.routes[key]}/>)}
 				</ul>

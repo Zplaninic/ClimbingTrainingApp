@@ -2,8 +2,8 @@
 /* eslint-disable class-methods-use-this */
 import React from 'react';
 import Button from '../css/elements/Button'
-
-
+import { Form, Input, Select} from '../css/elements/FormInput'; 
+import  { validate } from '../helper';
 
 class ClimbingTrainingForm extends React.Component {
 
@@ -25,27 +25,48 @@ class ClimbingTrainingForm extends React.Component {
 			restTime: this.restTimeRef.current.value,
 			date: this.dateRef.current.value
 		};
+
+		if(!route.date) {
+			return;
+		}
 		
-			this.props.addRoute(route);
+		this.props.addRoute(route);
 
-			event.currentTarget.reset();
+		event.currentTarget.reset();
 
-    }
+	}
+	
+	createDate = (event) => {
+		event.preventDefault();
+
+		const date = event.target.value;
+
+		this.props.addDate(date);
+
+	}
 
     render() {
+		const error = validate(this.props.date)
+		console.log(error);
+
     	return (
-    		<form className="route-edit" onSubmit={this.createRoute}>
-				<input name="date" ref={this.dateRef} type="date" />
-    			<input name="name" ref={this.nameRef} type="text" placeholder="Name"/>
-    			<input name="grade" ref={this.gradeRef} type="text" placeholder="Grade"/>
-    			<input name="movements" ref={this.movementsRef} type="number" placeholder="Movements"/>
-    			<select name="type" ref={this.typeRef}>
-    				<option value="boulder">Boulder</option>
-    				<option value="route">Route</option>
-    			</select>
-    			<input name="rest" ref={this.restTimeRef} type="text" placeholder="Rest time (seconds)"/>
-    			<Button type="submit">Add Route</Button>
-    		</form>
+			<React.Fragment>
+				<Form className="date-picker">
+					{error === true && <p>Input date</p>}
+					<Input primary={error} name="date" type="date" ref={this.dateRef} onChange={this.createDate}/>
+				</Form>
+				<Form className="route-edit" onSubmit={this.createRoute}>
+					<Input name="name" ref={this.nameRef} type="text" placeholder="Name"/>
+					<Input name="grade" ref={this.gradeRef} type="text" placeholder="Grade"/>
+					<Input name="movements" ref={this.movementsRef} type="number" placeholder="Movements"/>
+					<Select name="type" ref={this.typeRef}>
+						<option value="boulder">Boulder</option>
+						<option value="route">Route</option>
+					</Select>
+					<Input name="rest" ref={this.restTimeRef} type="text" placeholder="Rest time (seconds)"/>
+					<Button type="submit">Add Route</Button>
+				</Form>
+			</React.Fragment>
     	);
     }
 }
