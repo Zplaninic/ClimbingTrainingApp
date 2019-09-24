@@ -3,7 +3,7 @@
 import React from 'react';
 import Button from '../css/elements/Button'
 import { Form, Input, Select} from '../css/elements/FormInput'; 
-
+import  { validate } from '../helper';
 
 class ClimbingTrainingForm extends React.Component {
 
@@ -25,18 +25,35 @@ class ClimbingTrainingForm extends React.Component {
 			restTime: this.restTimeRef.current.value,
 			date: this.dateRef.current.value
 		};
+
+		if(!route.date) {
+			return;
+		}
 		
-			this.props.addRoute(route);
+		this.props.addRoute(route);
 
-			event.currentTarget.reset();
+		event.currentTarget.reset();
 
-    }
+	}
+	
+	createDate = (event) => {
+		event.preventDefault();
+
+		const date = event.target.value;
+
+		this.props.addDate(date);
+
+	}
 
     render() {
+		const error = validate(this.props.date)
+		console.log(error);
+
     	return (
 			<React.Fragment>
 				<Form className="date-picker">
-					<Input name="date" type="date" ref={this.dateRef} onChange={this.createDate}/>
+					{error === true && <p>Input date</p>}
+					<Input primary={error} name="date" type="date" ref={this.dateRef} onChange={this.createDate}/>
 				</Form>
 				<Form className="route-edit" onSubmit={this.createRoute}>
 					<Input name="name" ref={this.nameRef} type="text" placeholder="Name"/>
