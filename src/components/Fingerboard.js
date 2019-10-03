@@ -2,11 +2,22 @@
 import React, { Component } from 'react';
 import FingerboardForm from './FingerBoardForm';
 import Countdown from './Countdown';
-
+import base from '../base';
 class Fingerboard extends Component {
 	state = {
 		sessions: {},
 	};
+
+	componentDidMount() {
+		this.ref = base.syncState('fingerboard', {
+			context: this,
+			state: 'sessions'
+		});
+	}
+
+	componentWillUnmount() {
+		base.removeBinding(this.ref);
+	}
 
 	addSession = (session) => {
 		const sessions = { ...this.state.sessions };

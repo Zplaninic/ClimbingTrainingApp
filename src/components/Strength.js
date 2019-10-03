@@ -2,11 +2,23 @@
 import React, { Component } from 'react';
 import StrengthTrainingForm from './StrengthTrainingForm';
 import StrengthExercise from './StrengthExercise';
+import base from '../base';
 
 class Strength extends Component {
 	state = {
 		exercises: {},
 		date: {}
+	}
+
+	componentDidMount() {
+		this.ref = base.syncState('strength', {
+			context: this,
+			state: 'exercises'
+		});
+	}
+
+	componentWillUnmount() {
+		base.removeBinding(this.ref);
 	}
 
 	addExercise = (exercise) => {
