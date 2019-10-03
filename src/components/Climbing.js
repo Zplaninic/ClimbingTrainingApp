@@ -3,12 +3,24 @@ import React, { Component } from 'react';
 import ClimbingTrainingForm from './ClimbingTrainingForm';
 import ClimbingRoute from './ClimbingRoute';
 import Timer from './Timer';
+import base from '../base';
 
 
 class Climbing extends Component {
 	state = {
 		routes: {},
 		date: {}
+	}
+
+	componentDidMount() {
+		this.ref = base.syncState('climbing', {
+			context: this,
+			state: 'routes'
+		});
+	}
+
+	componentWillUnmount() {
+		base.removeBinding(this.ref);
 	}
 
 	addRoute = (route) => {
