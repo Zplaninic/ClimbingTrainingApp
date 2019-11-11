@@ -33,6 +33,15 @@ class Climbing extends Component {
 		});
 	}
 
+	updateRoute = (key, updatedRoute) => {
+		//Take the copy of current routes 
+		const routes = { ...this.state.routes }; 
+		//Update the state 
+		routes[key] = updatedRoute
+		//Set to state 
+		this.setState({routes})
+	}
+
 	addDate = (date) => {
 
 		this.setState({
@@ -46,9 +55,10 @@ class Climbing extends Component {
 				<h1>Climbing training</h1>
 				<h3>{this.props.tagline}</h3>
 				<ClimbingTrainingForm addRoute={this.addRoute} addDate={this.addDate} {...this.state}/>
-				<ul className="routes">
-					{Object.keys(this.state.routes).map(key => <ClimbingRoute key={key} routeDetails={this.state.routes[key]}/>)}
-				</ul>
+				<div className="routes">
+					{Object.keys(this.state.routes).map(key => <ClimbingRoute index={key} key={key} routeDetails={this.state.routes[key]} 
+							updateRoute={this.updateRoute}/>)}
+				</div>
 				<Timer />
 			</div>
 		);
