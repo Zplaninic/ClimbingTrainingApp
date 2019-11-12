@@ -37,6 +37,15 @@ class Strength extends Component {
     });
   };
 
+  updateExercise = (key, updatedRoute) => {
+    //Take the copy of current routes
+    const exercises = { ...this.state.exercises };
+    //Update the state
+    exercises[key] = updatedRoute;
+    //Set to state
+    this.setState({ exercises });
+  };
+
   render() {
     return (
       <div className="strength-training">
@@ -49,8 +58,10 @@ class Strength extends Component {
         <ul className="exercises">
           {Object.keys(this.state.exercises).map(key => (
             <StrengthExercise
+              index={key}
               key={key}
               exerciseDetails={this.state.exercises[key]}
+              updateExercise={this.updateExercise}
             />
           ))}
         </ul>

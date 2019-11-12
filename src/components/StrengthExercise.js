@@ -1,20 +1,57 @@
-/* eslint-disable class-methods-use-this */
 import React, { Component } from "react";
-import { Ul, Li } from "../css/elements/Lists";
 
 class StrengthExercise extends Component {
+  handleChange = event => {
+    //Get the copy of current fish
+    const updatedExercise = {
+      ...this.props.exerciseDetails,
+      [event.currentTarget.name]: event.currentTarget.value
+    };
+
+    this.props.updateExercise(this.props.index, updatedExercise);
+  };
   render() {
     const { name, type, sets, reps, rest, date } = this.props.exerciseDetails;
 
     return (
-      <Ul className="exercise">
-        <Li>{date}</Li>
-        <Li>{name}</Li>
-        <Li>{type}</Li>
-        <Li>Sets: {sets}</Li>
-        <Li>Reps: {reps}</Li>
-        <Li>Rest: {rest} s</Li>
-      </Ul>
+      <div className="exercise">
+        <input
+          type="text"
+          name="date"
+          onChange={this.handleChange}
+          value={date}
+        />
+        <input
+          type="text"
+          name="name"
+          onChange={this.handleChange}
+          value={name}
+        />
+        <input
+          type="text"
+          name="type"
+          onChange={this.handleChange}
+          value={type}
+        />
+        <input
+          type="text"
+          name="sets"
+          onChange={this.handleChange}
+          value={sets}
+        />
+        <input
+          type="text"
+          name="reps"
+          onChange={this.handleChange}
+          value={reps}
+        />
+        <input
+          type="text"
+          name="rest"
+          onChange={this.handleChange}
+          value={rest}
+        />
+      </div>
     );
   }
 }
