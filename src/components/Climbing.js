@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import React, { Component } from "react";
 import ClimbingTrainingForm from "./ClimbingTrainingForm";
 import ClimbingRoute from "./ClimbingRoute";
@@ -47,6 +46,15 @@ class Climbing extends Component {
     });
   };
 
+  deleteRoute = key => {
+    //1. Take the copy of state
+    const routes = { ...this.state.routes };
+    //2. Update the state
+    routes[key] = null;
+    //3. Update state
+    this.setState({ routes });
+  };
+
   render() {
     return (
       <div className="training-program">
@@ -64,6 +72,7 @@ class Climbing extends Component {
               key={key}
               routeDetails={this.state.routes[key]}
               updateRoute={this.updateRoute}
+              deleteRoute={this.deleteRoute}
             />
           ))}
         </div>

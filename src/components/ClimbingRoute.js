@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import React, { Component } from "react";
 
 class ClimbingRoute extends Component {
@@ -60,6 +59,9 @@ class ClimbingRoute extends Component {
           onChange={this.handleChange}
           value={restTime}
         />
+        <button onClick={() => this.props.deleteRoute(this.props.index)}>
+          Remove route
+        </button>
       </div>
     );
   }

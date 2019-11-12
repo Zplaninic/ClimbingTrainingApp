@@ -46,6 +46,15 @@ class Strength extends Component {
     this.setState({ exercises });
   };
 
+  deleteExercise = key => {
+    //1. Take the copy of state
+    const exercises = { ...this.state.roexercisesutes };
+    //2. Update the state
+    exercises[key] = null;
+    //3. Update state
+    this.setState({ exercises });
+  };
+
   render() {
     return (
       <div className="strength-training">
@@ -62,6 +71,7 @@ class Strength extends Component {
               key={key}
               exerciseDetails={this.state.exercises[key]}
               updateExercise={this.updateExercise}
+              deleteExercise={this.deleteExercise}
             />
           ))}
         </ul>

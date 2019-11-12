@@ -51,6 +51,9 @@ class StrengthExercise extends Component {
           onChange={this.handleChange}
           value={rest}
         />
+        <button onClick={() => this.props.deleteExercise(this.props.index)}>
+          Remove exercise
+        </button>
       </div>
     );
   }
