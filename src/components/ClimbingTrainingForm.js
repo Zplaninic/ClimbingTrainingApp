@@ -4,8 +4,14 @@ import React from "react";
 import Button from "../css/elements/Button";
 import { Form, Input, Select } from "../css/elements/FormInput";
 import { validate } from "../helper";
+import PropTypes from "prop-types";
 
 class ClimbingTrainingForm extends React.Component {
+  static propTypes = {
+    addRoute: PropTypes.func,
+    addDate: PropTypes.func,
+    date: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+  };
   nameRef = React.createRef();
   gradeRef = React.createRef();
   movementsRef = React.createRef();

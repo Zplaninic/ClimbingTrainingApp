@@ -59,7 +59,6 @@ class Climbing extends Component {
     return (
       <div className="training-program">
         <h1>Climbing training</h1>
-        <h3>{this.props.tagline}</h3>
         <ClimbingTrainingForm
           addRoute={this.addRoute}
           addDate={this.addDate}

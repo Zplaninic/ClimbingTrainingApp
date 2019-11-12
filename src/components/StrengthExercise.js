@@ -1,6 +1,21 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class StrengthExercise extends Component {
+  static propTypes = {
+    exerciseDetails: PropTypes.shape({
+      name: PropTypes.string,
+      type: PropTypes.string,
+      sets: PropTypes.string,
+      reps: PropTypes.string,
+      rest: PropTypes.string,
+      date: PropTypes.string
+    }),
+    updateExercise: PropTypes.func,
+    index: PropTypes.string,
+    deleteExercise: PropTypes.func
+  };
+
   handleChange = event => {
     //Get the copy of current fish
     const updatedExercise = {
@@ -10,6 +25,7 @@ class StrengthExercise extends Component {
 
     this.props.updateExercise(this.props.index, updatedExercise);
   };
+
   render() {
     const { name, type, sets, reps, rest, date } = this.props.exerciseDetails;
 
