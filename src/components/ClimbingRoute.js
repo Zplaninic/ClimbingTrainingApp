@@ -1,6 +1,20 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class ClimbingRoute extends Component {
+  static propTypes = {
+    updateRoute: PropTypes.func,
+    deleteRoute: PropTypes.func,
+    routeDetails: PropTypes.shape({
+      grade: PropTypes.string,
+      movements: PropTypes.string,
+      name: PropTypes.string,
+      restTime: PropTypes.string,
+      type: PropTypes.string,
+      date: PropTypes.string
+    })
+  };
+
   handleChange = event => {
     //Get the copy of current fish
     const updatedRoute = {
