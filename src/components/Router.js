@@ -5,11 +5,12 @@ import Strength from "./Strength";
 import Fingerboard from "./Fingerboard";
 import NotFound from "./NotFound";
 import TrainingPicker from "./TrainingPicker";
+import App from "./App";
 
 const Router = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={TrainingPicker} />
+      <Route exact path="/" component={App} />
       <Route exact path="/climbing" component={Climbing} />
       <Route exact path="/strength" component={Strength} />
       <Route exact path="/fingerboard" component={Fingerboard} />
