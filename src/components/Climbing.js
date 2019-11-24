@@ -11,7 +11,7 @@ class Climbing extends Component {
   };
 
   componentDidMount() {
-    this.ref = base.syncState("climbing", {
+    this.ref = base.syncState(`${this.props.userId}/climbing`, {
       context: this,
       state: "routes"
     });

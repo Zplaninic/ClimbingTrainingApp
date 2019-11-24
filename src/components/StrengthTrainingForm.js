@@ -49,7 +49,6 @@ class StrengthTrainingForm extends React.Component {
 
   render() {
     const error = validate(this.props.date);
-    console.log(error);
 
     return (
       <React.Fragment>

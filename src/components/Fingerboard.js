@@ -9,7 +9,7 @@ class Fingerboard extends Component {
   };
 
   componentDidMount() {
-    this.ref = base.syncState("fingerboard", {
+    this.ref = base.syncState(`${this.props.userId}/fingerboard`, {
       context: this,
       state: "sessions"
     });
