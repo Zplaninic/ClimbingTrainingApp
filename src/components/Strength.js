@@ -11,7 +11,7 @@ class Strength extends Component {
   };
 
   componentDidMount() {
-    this.ref = base.syncState("strength", {
+    this.ref = base.syncState(`${this.props.userId}/strength`, {
       context: this,
       state: "exercises"
     });
