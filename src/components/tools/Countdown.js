@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import "../css/countdown.css";
-import Button from "../css/elements/Button";
-
+import "../../css/countdown.css";
+import Button from "../../css/elements/Button";
 class Countdown extends Component {
   state = {
     timerOn: false,
