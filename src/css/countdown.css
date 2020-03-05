@@ -1,39 +1,38 @@
 .Countdown {
-    margin-left: 30px;
-    margin-right: 30px;
-    border: 2px solid grey;
-    border-radius: 4px;
-    padding: 20px;
-    width: 400px;
-    box-shadow: 0 3px 6px rgb(12, 12, 12);
+  margin-left: 30px;
+  margin-right: 30px;
+  border: 2px solid grey;
+  border-radius: 4px;
+  padding: 20px;
+  width: 400px;
+  box-shadow: 0 3px 6px rgb(12, 12, 12);
 }
 
 .Countdown {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
 .Countdown-header {
-    font-size: 40px;
-    font-weight: bold;
+  font-size: 40px;
+  font-weight: bold;
 }
 
 .Countdown-display {
-    margin-top: 5px;
-    margin-bottom: 20px;
+  margin-top: 5px;
+  margin-bottom: 20px;
 }
 
-
 .Countdown-display button:hover {
-    background-color: #106ba3;
+  background-color: #106ba3;
 }
 
 .Countdown-label {
-    font-size: 18px;
-    margin-top: 5px;
-    margin-bottom: 10px;
+  font-size: 18px;
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 .Countdown-time {
-    font-size: 36px;
-    margin: 5px 0;
+  font-size: 36px;
+  margin: 5px 0;
 }

@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import React, { Component } from "react";
-import Button from "../css/elements/Button";
+import Button from "../../css/elements/Button";
 import PropTypes from "prop-types";
 
 class FingerBoardForm extends Component {

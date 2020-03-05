@@ -16,7 +16,7 @@ class ClimbingRoute extends Component {
   };
 
   handleChange = event => {
-    //Get the copy of current fish
+    //Get the copy of current route
     const updatedRoute = {
       ...this.props.routeDetails,
       [event.currentTarget.name]: event.currentTarget.value

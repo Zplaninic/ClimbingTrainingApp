@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import StrengthTrainingForm from "./StrengthTrainingForm";
 import StrengthExercise from "./StrengthExercise";
-import base from "../base";
+import base from "../../base";
 
 class Strength extends Component {
   state = {

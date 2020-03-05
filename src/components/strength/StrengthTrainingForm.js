@@ -1,7 +1,7 @@
 import React from "react";
-import Button from "../css/elements/Button";
-import { Form, Input, Select } from "../css/elements/FormInput";
-import { validate } from "../helper";
+import Button from "../../css/elements/Button";
+import { Form, Input, Select } from "../../css/elements/FormInput";
+import { validate } from "../../helper";
 import PropTypes from "prop-types";
 
 class StrengthTrainingForm extends React.Component {

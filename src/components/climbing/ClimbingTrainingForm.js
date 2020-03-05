@@ -1,9 +1,7 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
-/* eslint-disable class-methods-use-this */
 import React from "react";
-import Button from "../css/elements/Button";
-import { Form, Input, Select } from "../css/elements/FormInput";
-import { validate } from "../helper";
+import Button from "../../css/elements/Button";
+import { Form, Input, Select } from "../../css/elements/FormInput";
+import { validate } from "../../helper";
 import PropTypes from "prop-types";
 
 class ClimbingTrainingForm extends React.Component {
@@ -12,6 +10,7 @@ class ClimbingTrainingForm extends React.Component {
     addDate: PropTypes.func,
     date: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
   };
+
   nameRef = React.createRef();
   gradeRef = React.createRef();
   movementsRef = React.createRef();

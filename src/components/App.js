@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import firebase from "firebase";
 import base, { firebaseApp } from "../base";
-import Climbing from "./Climbing";
-import Strength from "./Strength";
-import Fingerboard from "./Fingerboard";
-import NotFound from "./NotFound";
+import Climbing from "./climbing/Climbing";
+import Strength from "./strength/Strength";
+import Fingerboard from "./fingerboard/Fingerboard";
+import NotFound from "./stateless/NotFound";
 import Home from "./Home";
 import Authentication from "./authentication/Authentication";
 

@@ -1,8 +1,9 @@
 /* eslint-disable class-methods-use-this */
 import React, { Component } from "react";
 import FingerboardForm from "./FingerBoardForm";
-import Countdown from "./Countdown";
-import base from "../base";
+import Countdown from "../tools/Countdown";
+import base from "../../base";
+
 class Fingerboard extends Component {
   state = {
     sessions: {}
