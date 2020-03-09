@@ -68,7 +68,8 @@ class Authentication extends React.Component {
 }
 
 Authentication.propTypes = {
-  authenticateWithSocialNetwork: PropTypes.func.isRequired
+  authenticateWithSocialNetwork: PropTypes.func.isRequired,
+  authenticateWithEmailAndPass: PropTypes.func.isRequired
 };
 
 export default Authentication;
