@@ -40,13 +40,21 @@ class App extends Component {
     //1. Look up the current user in the firebase database
   };
 
-  authenticate = provider => {
+  authenticateWithSocialNetwork = provider => {
     const authProvider = new firebase.auth[`${provider}AuthProvider`]();
     console.log(authProvider);
 
     firebaseApp
       .auth()
       .signInWithPopup(authProvider)
+      .then(this.authHandler);
+  };
+
+  authenticateWithEmailAndPass = (email, password) => {
+    console.log(email, password);
+    firebaseApp
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
       .then(this.authHandler);
   };
 
@@ -61,7 +69,10 @@ class App extends Component {
       return (
         <Router>
           <Route exact={true} path="/">
-            <Authentication authenticate={this.authenticate} />
+            <Authentication
+              authenticateWithSocialNetwork={this.authenticateWithSocialNetwork}
+              authenticateWithEmailAndPass={this.authenticateWithEmailAndPass}
+            />
           </Route>
         </Router>
       );
