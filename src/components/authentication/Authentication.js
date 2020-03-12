@@ -1,7 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { validateAuthentication } from "./../../utils/validationUtils";
 
 class Authentication extends React.Component {
+  state = {
+    errorAuthusername: null,
+    errorAuthemail: null,
+    errorAuthpassword: null
+  };
   userName = React.createRef();
   userEmail = React.createRef();
   userPassword = React.createRef();
@@ -16,7 +22,30 @@ class Authentication extends React.Component {
 
     this.props.authenticateWithEmailAndPass(data.email, data.pass);
   };
+
+  validateChange = event => {
+    const patterns = {
+      username: /^[a-z\d]{5,12}$/i,
+      password: /^[\w@-]{8,20}$/,
+      email: /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})([a-z]{2,8})?$/
+    };
+
+    const error = validateAuthentication(
+      event.target,
+      patterns[event.target.name]
+    );
+
+    this.setState({
+      [`errorAuth${event.target.name}`]: error
+    });
+  };
+
   render() {
+    const errorUserName = this.state.errorAuthusername;
+    const errorEmail = this.state.errorAuthemail;
+    const errorPassword = this.state.errorAuthpassword;
+
+    // console.log(error);
     return (
       <React.Fragment>
         <form onSubmit={this.submitEmailPassword}>
@@ -25,27 +54,34 @@ class Authentication extends React.Component {
             name="username"
             placeholder="username"
             ref={this.userName}
+            onChange={this.validateChange}
           />
-          <p>Username must be and contain 5 - 12 characters</p>
-
+          {(errorUserName === null || errorUserName === false) && (
+            <p>Username must be and contain 5 - 12 characters</p>
+          )}
           <input
             type="text"
             name="email"
             placeholder="email"
             ref={this.userEmail}
+            onChange={this.validateChange}
           />
-          <p>Email must be a valid address, e.g. me@mydomain.com</p>
-
+          {(errorEmail === null || errorEmail === false) && (
+            <p>Email must be a valid address, e.g. me@mydomain.com</p>
+          )}
           <input
             type="password"
             name="password"
             placeholder="password"
             ref={this.userPassword}
+            onChange={this.validateChange}
           />
-          <p>
-            Password must alphanumeric (@, _ and - are also allowed) and be 8 -
-            20 characters
-          </p>
+          {(errorPassword === null || errorPassword === false) && (
+            <p>
+              Password must alphanumeric (@, _ and - are also allowed) and be 8
+              - 20 characters
+            </p>
+          )}
           <button type="submit">Login by email</button>
         </form>
         <nav className="authOption">

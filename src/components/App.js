@@ -8,7 +8,6 @@ import Fingerboard from "./fingerboard/Fingerboard";
 import NotFound from "./stateless/NotFound";
 import Home from "./Home";
 import Authentication from "./authentication/Authentication";
-
 class App extends Component {
   state = {
     uid: null
