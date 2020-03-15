@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { validateAuthentication } from "./../../utils/validationUtils";
+import validateAuthentication from "./../../utils/validationUtils";
 
 class Authentication extends React.Component {
   state = {
@@ -23,23 +23,6 @@ class Authentication extends React.Component {
     this.props.authenticateWithEmailAndPass(data.email, data.pass);
   };
 
-  validateChange = event => {
-    const patterns = {
-      username: /^[a-z\d]{5,12}$/i,
-      password: /^[\w@-]{8,20}$/,
-      email: /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})([a-z]{2,8})?$/
-    };
-
-    const error = validateAuthentication(
-      event.target,
-      patterns[event.target.name]
-    );
-
-    this.setState({
-      [`errorAuth${event.target.name}`]: error
-    });
-  };
-
   render() {
     const errorUserName = this.state.errorAuthusername;
     const errorEmail = this.state.errorAuthemail;
@@ -54,7 +37,9 @@ class Authentication extends React.Component {
             name="username"
             placeholder="username"
             ref={this.userName}
-            onChange={this.validateChange}
+            onChange={event =>
+              validateAuthentication(event, this.setState.bind(this))
+            }
           />
           {(errorUserName === null || errorUserName === false) && (
             <p>Username must be and contain 5 - 12 characters</p>
@@ -64,7 +49,9 @@ class Authentication extends React.Component {
             name="email"
             placeholder="email"
             ref={this.userEmail}
-            onChange={this.validateChange}
+            onChange={event =>
+              validateAuthentication(event, this.setState.bind(this))
+            }
           />
           {(errorEmail === null || errorEmail === false) && (
             <p>Email must be a valid address, e.g. me@mydomain.com</p>
@@ -74,7 +61,9 @@ class Authentication extends React.Component {
             name="password"
             placeholder="password"
             ref={this.userPassword}
-            onChange={this.validateChange}
+            onChange={event =>
+              validateAuthentication(event, this.setState.bind(this))
+            }
           />
           {(errorPassword === null || errorPassword === false) && (
             <p>
@@ -82,7 +71,11 @@ class Authentication extends React.Component {
               - 20 characters
             </p>
           )}
-          <button type="submit">Login by email</button>
+          {errorUserName === true &&
+            errorEmail === true &&
+            errorPassword === true && (
+              <button type="submit">Login by email</button>
+            )}
         </form>
         <nav className="authOption">
           <button
