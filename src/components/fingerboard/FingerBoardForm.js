@@ -1,70 +1,72 @@
-/* eslint-disable class-methods-use-this */
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Button from "../../css/elements/Button";
 import PropTypes from "prop-types";
 
-class FingerBoardForm extends Component {
-  static propTypes = {
-    addSession: PropTypes.func
-  };
-  onSubmit = false;
-  setsRef = React.createRef();
-  workRef = React.createRef();
-  restRef = React.createRef();
-  pauseRef = React.createRef();
+const FingerBoardForm = ({ addSession }) => {
+  const [fingerBoardSession, setFingerBoardState] = useState({
+    setsNumber: "",
+    workInterval: "",
+    restInterval: "",
+    pauseBetweenSets: ""
+  });
 
-  createSession = event => {
+  const updateFingerBoardSession = e => {
+    setFingerBoardState({
+      ...fingerBoardSession,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const createSession = event => {
     event.preventDefault();
 
-    const session = {
-      setsRef: this.setsRef.current.value,
-      workRef: this.workRef.current.value,
-      restRef: this.restRef.current.value,
-      pauseRef: this.pauseRef.current.value
-    };
+    addSession(fingerBoardSession);
 
-    this.props.addSession(session);
-
-    event.currentTarget.reset();
-
-    this.onSubmit = true;
+    setFingerBoardState({
+      setsNumber: "",
+      workInterval: "",
+      restInterval: "",
+      pauseBetweenSets: ""
+    });
   };
 
-  render() {
-    const addButton = !this.onSubmit ? (
+  return (
+    <form className="fingerboard-training" onSubmit={createSession}>
+      <input
+        name="setsNumber"
+        type="number"
+        placeholder="Sets"
+        value={fingerBoardSession.setsNumber}
+        onChange={updateFingerBoardSession}
+      />
+      <input
+        name="workInterval"
+        type="number"
+        placeholder="Work interval"
+        value={fingerBoardSession.workInterval}
+        onChange={updateFingerBoardSession}
+      />
+      <input
+        name="restInterval"
+        type="number"
+        placeholder="Rest interval"
+        value={fingerBoardSession.restInterval}
+        onChange={updateFingerBoardSession}
+      />
+      <input
+        name="pauseBetweenSets"
+        type="number"
+        placeholder="Pause time"
+        value={fingerBoardSession.pauseBetweenSets}
+        onChange={updateFingerBoardSession}
+      />
       <Button type="submit">Add Session</Button>
-    ) : null;
+    </form>
+  );
+};
 
-    return (
-      <form className="fingerboard-training" onSubmit={this.createSession}>
-        <input
-          name="sets"
-          ref={this.setsRef}
-          type="number"
-          placeholder="Sets"
-        />
-        <input
-          name="work"
-          ref={this.workRef}
-          type="number"
-          placeholder="Work interval"
-        />
-        <input
-          name="rest"
-          ref={this.restRef}
-          type="number"
-          placeholder="Rest interval"
-        />
-        <input
-          name="pause"
-          ref={this.pauseRef}
-          type="number"
-          placeholder="Pause time"
-        />
-        {addButton}
-      </form>
-    );
-  }
-}
+FingerBoardForm.propTypes = {
+  addSession: PropTypes.func
+};
 
 export default FingerBoardForm;
