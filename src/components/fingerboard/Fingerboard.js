@@ -4,7 +4,7 @@ import FingerboardForm from "./FingerBoardForm";
 import base from "../../base";
 
 const Fingerboard = ({ userId }) => {
-  const [sessions, setSession] = useState([]);
+  const [sessions, setSession] = useState({});
 
   // console.log(sessions);
   // useEffect(() => {
@@ -18,7 +18,7 @@ const Fingerboard = ({ userId }) => {
   //   base.removeBinding(this.ref);
   // }
   const addSession = session => {
-    setSession([...sessions, { [`Session${Date.now()}`]: session }]);
+    setSession({ ...sessions, [`Session${Date.now()}`]: session });
   };
 
   return (

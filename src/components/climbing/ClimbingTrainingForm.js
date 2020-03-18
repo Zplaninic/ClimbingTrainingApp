@@ -1,102 +1,102 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../../css/elements/Button";
 import { Form, Input, Select } from "../../css/elements/FormInput";
 import { validate } from "../../helper";
 import PropTypes from "prop-types";
 
-class ClimbingTrainingForm extends React.Component {
-  static propTypes = {
-    addRoute: PropTypes.func,
-    addDate: PropTypes.func,
-    date: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+const ClimbingTrainingForm = ({ addRoute }) => {
+  const [climbingRoute, setClimbingRouteState] = useState({
+    date: "",
+    name: "",
+    grade: "",
+    movements: "",
+    type: "boulder",
+    rest: ""
+  });
+
+  const updateClimbingRouteState = e => {
+    setClimbingRouteState({
+      ...climbingRoute,
+      [e.target.name]: e.target.value
+    });
   };
 
-  nameRef = React.createRef();
-  gradeRef = React.createRef();
-  movementsRef = React.createRef();
-  typeRef = React.createRef();
-  restTimeRef = React.createRef();
-  dateRef = React.createRef();
+  const createRoute = e => {
+    e.preventDefault();
 
-  createRoute = event => {
-    event.preventDefault();
-
-    const route = {
-      name: this.nameRef.current.value,
-      grade: this.gradeRef.current.value,
-      movements: this.movementsRef.current.value,
-      type: this.typeRef.current.value,
-      restTime: this.restTimeRef.current.value,
-      date: this.dateRef.current.value
-    };
-
-    if (!route.date) {
+    if (!climbingRoute.date) {
       return;
     }
 
-    this.props.addRoute(route);
+    addRoute(climbingRoute);
 
-    event.currentTarget.reset();
+    setClimbingRouteState({
+      date: "",
+      name: "",
+      grade: "",
+      movements: "",
+      type: "boulder",
+      rest: ""
+    });
   };
 
-  createDate = event => {
-    event.preventDefault();
+  const error = validate(climbingRoute.date);
 
-    const date = event.target.value;
-
-    this.props.addDate(date);
-  };
-
-  render() {
-    const error = validate(this.props.date);
-    console.log(error);
-
-    return (
-      <React.Fragment>
-        <Form className="date-picker">
-          {error === true && <p>Input date</p>}
-          <Input
-            primary={error}
-            name="date"
-            type="date"
-            ref={this.dateRef}
-            onChange={this.createDate}
-          />
-        </Form>
-        <Form className="route-edit" onSubmit={this.createRoute}>
-          <Input
-            name="name"
-            ref={this.nameRef}
-            type="text"
-            placeholder="Name"
-          />
-          <Input
-            name="grade"
-            ref={this.gradeRef}
-            type="text"
-            placeholder="Grade"
-          />
-          <Input
-            name="movements"
-            ref={this.movementsRef}
-            type="number"
-            placeholder="Movements"
-          />
-          <Select name="type" ref={this.typeRef}>
-            <option value="boulder">Boulder</option>
-            <option value="route">Route</option>
-          </Select>
-          <Input
-            name="rest"
-            ref={this.restTimeRef}
-            type="text"
-            placeholder="Rest time (seconds)"
-          />
-          <Button type="submit">Add Route</Button>
-        </Form>
-      </React.Fragment>
-    );
-  }
-}
+  return (
+    <React.Fragment>
+      <Form className="route-edit" onSubmit={createRoute}>
+        {error === true && <p>Input date</p>}
+        <Input
+          // primary={error}
+          value={climbingRoute.date}
+          name="date"
+          type="date"
+          onChange={updateClimbingRouteState}
+        />
+        <Input
+          value={climbingRoute.name}
+          name="name"
+          type="text"
+          placeholder="Name"
+          onChange={updateClimbingRouteState}
+        />
+        <Input
+          value={climbingRoute.grade}
+          name="grade"
+          type="text"
+          placeholder="Grade"
+          onChange={updateClimbingRouteState}
+        />
+        <Input
+          value={climbingRoute.movements}
+          name="movements"
+          type="number"
+          placeholder="Movements"
+          onChange={updateClimbingRouteState}
+        />
+        <Select
+          name="type"
+          onChange={updateClimbingRouteState}
+          value={climbingRoute.type}
+        >
+          <option value="boulder">Boulder</option>
+          <option value="route">Route</option>
+        </Select>
+        <Input
+          value={climbingRoute.rest}
+          name="rest"
+          type="text"
+          placeholder="Rest time (seconds)"
+          onChange={updateClimbingRouteState}
+        />
+        <Button type="submit">Add Route</Button>
+      </Form>
+    </React.Fragment>
+  );
+};
 
 export default ClimbingTrainingForm;
+
+ClimbingTrainingForm.propTypes = {
+  addRoute: PropTypes.func
+};
