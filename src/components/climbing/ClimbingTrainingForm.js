@@ -95,8 +95,8 @@ const ClimbingTrainingForm = ({ addRoute }) => {
   );
 };
 
-export default ClimbingTrainingForm;
-
 ClimbingTrainingForm.propTypes = {
   addRoute: PropTypes.func
 };
+
+export default ClimbingTrainingForm;

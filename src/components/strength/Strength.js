@@ -1,83 +1,40 @@
-/* eslint-disable class-methods-use-this */
-import React, { Component } from "react";
+import React, { useState } from "react";
 import StrengthTrainingForm from "./StrengthTrainingForm";
 import StrengthExercise from "./StrengthExercise";
-import base from "../../base";
 
-class Strength extends Component {
-  state = {
-    exercises: {},
-    date: {}
+const Strength = () => {
+  const [exercises, setExercises] = useState({});
+
+  const addExercise = exercise => {
+    setExercises({ ...exercises, [`Route${Date.now()}`]: exercise });
   };
 
-  componentDidMount() {
-    this.ref = base.syncState(`${this.props.userId}/strength`, {
-      context: this,
-      state: "exercises"
-    });
-  }
-
-  componentWillUnmount() {
-    base.removeBinding(this.ref);
-  }
-
-  addExercise = exercise => {
-    const exercises = { ...this.state.exercises };
-
-    exercises[`Route${Date.now()}`] = exercise;
-
-    this.setState({
-      exercises: exercises
-    });
+  const updateExercise = (key, updatedRoute) => {
+    setExercises({ ...exercises, [key]: updatedRoute });
   };
 
-  addDate = date => {
-    this.setState({
-      date: date
-    });
+  const deleteExercise = key => {
+    delete exercises[key];
+    setExercises({ ...exercises });
   };
 
-  updateExercise = (key, updatedRoute) => {
-    //Take the copy of current routes
-    const exercises = { ...this.state.exercises };
-    //Update the state
-    exercises[key] = updatedRoute;
-    //Set to state
-    this.setState({ exercises });
-  };
-
-  deleteExercise = key => {
-    //1. Take the copy of state
-    const exercises = { ...this.state.roexercisesutes };
-    //2. Update the state
-    exercises[key] = null;
-    //3. Update state
-    this.setState({ exercises });
-  };
-
-  render() {
-    return (
-      <div className="strength-training">
-        <h2>STRENGTH TRAINING</h2>
-        <StrengthTrainingForm
-          addExercise={this.addExercise}
-          addDate={this.addDate}
-          {...this.state}
-        />
-        <ul className="exercises">
-          {Object.keys(this.state.exercises).map(key => (
-            <StrengthExercise
-              index={key}
-              key={key}
-              exerciseDetails={this.state.exercises[key]}
-              updateExercise={this.updateExercise}
-              deleteExercise={this.deleteExercise}
-            />
-          ))}
-        </ul>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="strength-training">
+      <h2>STRENGTH TRAINING</h2>
+      <StrengthTrainingForm addExercise={addExercise} />
+      <ul className="exercises">
+        {Object.keys(exercises).map(key => (
+          <StrengthExercise
+            index={key}
+            key={key}
+            exerciseDetails={exercises[key]}
+            updateExercise={updateExercise}
+            deleteExercise={deleteExercise}
+          />
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 export default Strength;
