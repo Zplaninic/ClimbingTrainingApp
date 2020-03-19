@@ -39,8 +39,6 @@ const ClimbingRoute = props => {
   );
 };
 
-export default ClimbingRoute;
-
 ClimbingRoute.propTypes = {
   updateRoute: PropTypes.func,
   deleteRoute: PropTypes.func,
@@ -53,3 +51,5 @@ ClimbingRoute.propTypes = {
     date: PropTypes.string
   })
 };
+
+export default ClimbingRoute;

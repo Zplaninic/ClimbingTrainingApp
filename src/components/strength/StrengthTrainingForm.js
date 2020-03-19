@@ -1,110 +1,107 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../../css/elements/Button";
 import { Form, Input, Select } from "../../css/elements/FormInput";
 import { validate } from "../../helper";
 import PropTypes from "prop-types";
 
-class StrengthTrainingForm extends React.Component {
-  static propTypes = {
-    addExercise: PropTypes.func,
-    addDate: PropTypes.func,
-    date: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+const StrengthTrainingForm = ({ addExercise }) => {
+  const [strengthExercise, setStrenghtExercise] = useState({
+    date: "",
+    muscles: "antagonist",
+    type: "",
+    sets: "",
+    reps: "",
+    rest: ""
+  });
+
+  const updateStrengthExercise = e => {
+    setStrenghtExercise({
+      ...strengthExercise,
+      [e.target.name]: e.target.value
+    });
   };
 
-  nameRef = React.createRef();
-  typeRef = React.createRef();
-  setsRef = React.createRef();
-  repsRef = React.createRef();
-  restRef = React.createRef();
-  dateRef = React.createRef();
+  const createExercise = e => {
+    e.preventDefault();
 
-  createExercise = event => {
-    event.preventDefault();
-
-    const exercise = {
-      name: this.nameRef.current.value,
-      type: this.typeRef.current.value,
-      sets: this.setsRef.current.value,
-      reps: this.repsRef.current.value,
-      rest: this.restRef.current.value,
-      date: this.dateRef.current.value
-    };
-
-    if (!exercise.type || !exercise.date) {
+    if (!strengthExercise.type || !strengthExercise.date) {
       return;
     }
 
-    this.props.addExercise(exercise);
+    addExercise(strengthExercise);
 
-    event.currentTarget.reset();
+    setStrenghtExercise({
+      date: "",
+      muscles: "antagonist",
+      type: "",
+      sets: "",
+      reps: "",
+      rest: ""
+    });
   };
-  s;
-  createDate = event => {
-    event.preventDefault();
 
-    const date = event.target.value;
+  const error = validate(strengthExercise.date);
+  return (
+    <React.Fragment>
+      <Form className="strength-exercise" onSubmit={createExercise}>
+        {error === true && <p>Input date</p>}
+        <Input
+          value={strengthExercise.date}
+          // primary={error}
+          name="date"
+          type="date"
+          onChange={updateStrengthExercise}
+        />
+        <Select
+          name="muscles"
+          value={strengthExercise.antagonist}
+          onChange={updateStrengthExercise}
+        >
+          <option value="antagonist">Antagonist</option>
+          <option value="core">Core</option>
+          <option value="upperBoady">Upper body</option>
+          <option value="flexibility">Flexibility</option>
+        </Select>
+        <Input
+          name="type"
+          type="text"
+          placeholder="Exercise"
+          value={strengthExercise.type}
+          required
+          onChange={updateStrengthExercise}
+        />
+        <Input
+          name="sets"
+          type="number"
+          min="0"
+          placeholder="Sets"
+          value={strengthExercise.sets}
+          onChange={updateStrengthExercise}
+        />
+        <Input
+          name="reps"
+          type="number"
+          min="0"
+          placeholder="Repetitions"
+          value={strengthExercise.reps}
+          onChange={updateStrengthExercise}
+        />
+        <Input
+          name="rest"
+          type="number"
+          min="0"
+          placeholder="Rest time"
+          value={strengthExercise.rest}
+          onChange={updateStrengthExercise}
+        />
+        <Button type="submit">Add Route</Button>
+      </Form>
+    </React.Fragment>
+  );
+};
 
-    this.props.addDate(date);
-  };
-
-  render() {
-    const error = validate(this.props.date);
-
-    return (
-      <React.Fragment>
-        <Form className="date-picker">
-          {error === true && <p>Input date</p>}
-          <Input
-            primary={error}
-            name="date"
-            type="date"
-            ref={this.dateRef}
-            onChange={this.createDate}
-          />
-        </Form>
-        <Form className="strength-exercise" onSubmit={this.createExercise}>
-          <Select ref={this.nameRef}>
-            <option value="antagonist">Antagonist</option>
-            <option value="core">Core</option>
-            <option value="upperBoady">Upper body</option>
-            <option value="flexibility">Flexibility</option>
-          </Select>
-          <Input
-            name="type"
-            ref={this.typeRef}
-            type="text"
-            placeholder="Exercise"
-            required
-          />
-          <Input
-            name="sets"
-            ref={this.setsRef}
-            type="number"
-            min="0"
-            defaultValue="0"
-            placeholder="Sets"
-          />
-          <Input
-            name="reps"
-            ref={this.repsRef}
-            type="number"
-            min="0"
-            defaultValue="0"
-            placeholder="Repetitions"
-          />
-          <Input
-            name="rest"
-            ref={this.restRef}
-            type="number"
-            min="0"
-            defaultValue="0"
-            placeholder="Rest time"
-          />
-          <Button type="submit">Add Route</Button>
-        </Form>
-      </React.Fragment>
-    );
-  }
-}
+StrengthTrainingForm.propTypes = {
+  addRoute: PropTypes.func
+};
 
 export default StrengthTrainingForm;
