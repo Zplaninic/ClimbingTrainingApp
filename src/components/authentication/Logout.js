@@ -1,16 +1,25 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useContext } from "react";
+import { Card, Button } from "./../../css/elements/AuthForm";
+import firebase from "firebase";
+import { AuthContext } from "./../../context/auth";
 
-const Logout = props => (
-  <nav className="logoutOption">
-    <button onClick={() => props.logout()} className="logout">
-      Logout
-    </button>
-  </nav>
-);
+const Logout = ({ history }) => {
+  const Auth = useContext(AuthContext);
 
-Logout.propTypes = {
-  logout: PropTypes.func.isRequired
+  const logoutHandler = async () => {
+    console.log("logout");
+    await firebase.auth().signOut();
+    Auth.setLoggedIn(false);
+    Auth.setIsLoading(false);
+    history.push("/");
+  };
+
+  return (
+    <Card>
+      <Button onClick={() => logoutHandler()} className="logout">
+        Logout
+      </Button>
+    </Card>
+  );
 };
-
 export default Logout;
