@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import StrengthTrainingForm from "./StrengthTrainingForm";
 import StrengthExercise from "./StrengthExercise";
+import TrainingPicker from "./../navbars/TrainingPicker";
 
 const Strength = () => {
   const [exercises, setExercises] = useState({});
@@ -20,6 +21,7 @@ const Strength = () => {
 
   return (
     <div className="strength-training">
+      <TrainingPicker />
       <h2>STRENGTH TRAINING</h2>
       <StrengthTrainingForm addExercise={addExercise} />
       <ul className="exercises">

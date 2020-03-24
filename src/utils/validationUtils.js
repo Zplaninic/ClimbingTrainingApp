@@ -13,12 +13,8 @@ function regexTester(field, regex) {
   }
 }
 
-const validateAuthentication = (event, setState) => {
-  const error = regexTester(event.target, patterns[event.target.name]);
+export const validateAuthentication = (e, setError) => {
+  const error = regexTester(e.target, patterns[e.target.name]);
 
-  setState({
-    [`errorAuth${event.target.name}`]: error
-  });
+  setError(error);
 };
-
-export default validateAuthentication;

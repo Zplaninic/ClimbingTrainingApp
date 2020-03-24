@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ClimbingTrainingForm from "./ClimbingTrainingForm";
 import ClimbingRoute from "./ClimbingRoute";
 import Timer from "../tools/Timer";
+import TrainingPicker from "./../navbars/TrainingPicker";
+import { AuthContext } from "../../context/auth";
 
 const Climbing = () => {
   const [routes, setRoutes] = useState({});
+  const Auth = useContext(AuthContext);
 
   const addRoute = route => {
     setRoutes({ ...routes, [`Route${Date.now()}`]: route });
@@ -23,7 +26,9 @@ const Climbing = () => {
 
   return (
     <div className="training-program">
+      <TrainingPicker />
       <h1>Climbing training</h1>
+      <div>{Auth.userID}</div>
       <ClimbingTrainingForm addRoute={addRoute} />
       <div className="routes">
         {Object.keys(routes).map(key => (
