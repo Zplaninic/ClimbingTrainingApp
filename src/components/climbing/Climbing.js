@@ -1,45 +1,73 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import ClimbingTrainingForm from "./ClimbingTrainingForm";
 import ClimbingRoute from "./ClimbingRoute";
 import Timer from "../tools/Timer";
 import TrainingPicker from "./../navbars/TrainingPicker";
 import { AuthContext } from "../../context/auth";
-
+import firebaseApp from "./../../firebase";
+import { firebaseConfig } from "./../../firebase";
 const Climbing = () => {
-  const [routes, setRoutes] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const Auth = useContext(AuthContext);
+  const user = window.sessionStorage.getItem(
+    `firebase:authUser:${firebaseConfig.apiKey}:[DEFAULT]`
+  );
 
-  const addRoute = route => {
-    setRoutes({ ...routes, [`Route${Date.now()}`]: route });
+  const useRoutesfromFirestore = () => {
+    const [routesFireStore, setRoutesFireStore] = useState();
+    useEffect(() => {
+      firebaseApp
+        .firestore()
+        .collection("users")
+        .doc(JSON.parse(user).uid)
+        .onSnapshot(function(doc) {
+          if (doc.data()) {
+            setRoutesFireStore(doc.data().climbing);
+            setIsLoading(true);
+          }
+        });
+    }, []);
+
+    return routesFireStore;
   };
 
   const updateRoute = (key, updatedRoute) => {
-    setRoutes({ ...routes, [key]: updatedRoute });
+    const db = firebaseApp.firestore();
+    const climbingDataRef = db.collection("users").doc(JSON.parse(user).uid);
+
+    climbingDataRef.set({ climbing: { [key]: updatedRoute } }, { merge: true });
   };
 
-  const deleteRoute = key => {
-    delete routes[key];
-    setRoutes({
-      ...routes
-    });
-  };
+  // const deleteRoute = key => {
+  //   const db = firebaseApp.firestore();
+  //   const climbingDataRef = db.collection("users").doc(JSON.parse(user).uid);
+
+  //   climbingDataRef.set(
+  //     { climbing: { [key]: firebaseApp.firestore.FieldValue.delete() } },
+  //     { merge: true }
+  //   );
+  // };
+
+  const routesCloud = useRoutesfromFirestore();
 
   return (
     <div className="training-program">
       <TrainingPicker />
       <h1>Climbing training</h1>
       <div>{Auth.userID}</div>
-      <ClimbingTrainingForm addRoute={addRoute} />
+
+      <ClimbingTrainingForm />
       <div className="routes">
-        {Object.keys(routes).map(key => (
-          <ClimbingRoute
-            index={key}
-            key={key}
-            routeDetails={routes[key]}
-            updateRoute={updateRoute}
-            deleteRoute={deleteRoute}
-          />
-        ))}
+        {isLoading &&
+          Object.keys(routesCloud).map(key => (
+            <ClimbingRoute
+              index={key}
+              key={key}
+              routeDetails={routesCloud[key]}
+              updateRoute={updateRoute}
+              // deleteRoute={deleteRoute}
+            />
+          ))}
       </div>
       <Timer />
     </div>

@@ -60,4 +60,13 @@ const SocialButtonImage = styled.img`
   vertical-align: middle;
 `;
 
-export { Form, Input, Button, Logo, Card, Error, SocialButtonImage };
+export {
+  Form,
+  Input,
+  Button,
+  Logo,
+  Card,
+  Error,
+  SocialButtonImage,
+  SocialButton
+};

@@ -1,6 +1,5 @@
 import React from "react";
 import NavbarHome from "./navbars/NavbarHome";
-import Logout from "./authentication/Logout";
 
 const Home = () => {
   return (
