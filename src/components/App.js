@@ -9,7 +9,6 @@ import Analysis from "./analysis/Analysis";
 import Admin from "./private/Admin";
 import { AuthContext } from "./../context/auth";
 import PrivateRoute from "./private/PrivateRoute";
-import Authentication from "./authentication/Authentication";
 import Login from "./authentication/Login";
 import Signup from "./authentication/Signup";
 import { firebaseConfig } from "./../firebase";
@@ -24,7 +23,6 @@ const App = () => {
       `firebase:authUser:${firebaseConfig.apiKey}:[DEFAULT]`
     );
     if (user) {
-      console.log(JSON.parse(user).uid);
       setLoggedIn(true);
       setUserID(JSON.parse(user).uid);
     } else {
@@ -34,7 +32,6 @@ const App = () => {
   useEffect(() => {
     readSession();
   }, []);
-
   return (
     <AuthContext.Provider
       value={{

@@ -7,7 +7,6 @@ const PrivateRoute = ({
   isLoading,
   ...rest
 }) => {
-  console.log(isLoggedIn);
   if (isLoading || isLoggedIn) {
     return (
       <Route

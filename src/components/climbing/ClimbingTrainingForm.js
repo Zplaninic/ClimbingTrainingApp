@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Button from "../../css/elements/Button";
 import { Form, Input, Select } from "../../css/elements/FormInput";
 import { validate } from "../../helper";
 import PropTypes from "prop-types";
+import firebaseApp from "./../../firebase";
+import { AuthContext } from "../../context/auth";
 
-const ClimbingTrainingForm = ({ addRoute }) => {
+const ClimbingTrainingForm = () => {
+  const Auth = useContext(AuthContext);
+
+  const [routes, setRoutes] = useState({});
   const [climbingRoute, setClimbingRouteState] = useState({
     date: "",
     name: "",
@@ -21,6 +26,21 @@ const ClimbingTrainingForm = ({ addRoute }) => {
     });
   };
 
+  const addRouteFromForm = route => {
+    setRoutes({ ...routes, [`Route${Date.now()}`]: route });
+
+    firebaseApp
+      .firestore()
+      .collection("users")
+      .doc(Auth.userID)
+      .set(
+        {
+          climbing: { [`Route${Date.now()}`]: route }
+        },
+        { merge: true }
+      );
+  };
+
   const createRoute = e => {
     e.preventDefault();
 
@@ -28,7 +48,7 @@ const ClimbingTrainingForm = ({ addRoute }) => {
       return;
     }
 
-    addRoute(climbingRoute);
+    addRouteFromForm(climbingRoute);
 
     setClimbingRouteState({
       date: "",

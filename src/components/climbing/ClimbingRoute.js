@@ -11,6 +11,7 @@ const ClimbingRoute = props => {
       ...props.routeDetails,
       [e.currentTarget.name]: e.currentTarget.value
     };
+
     props.updateRoute(props.index, updatedRoute);
   };
 
@@ -32,9 +33,9 @@ const ClimbingRoute = props => {
         value={restTime}
         onChange={handleChange}
       />
-      <button onClick={() => props.deleteRoute(props.index)}>
+      {/* <button onClick={() => props.deleteRoute(props.index)}>
         Remove route
-      </button>
+      </button> */}
     </div>
   );
 };
