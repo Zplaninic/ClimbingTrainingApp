@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Button from "../../css/elements/Button";
 import { Form, Input, Select } from "../../css/elements/FormInput";
 import { validate } from "../../helper";
 import PropTypes from "prop-types";
+import { addExerciseToDatabse } from "./../../utils/dataBaseUtils";
+import { AuthContext } from "../../context/auth";
 
 const StrengthTrainingForm = ({ addExercise }) => {
+  const Auth = useContext(AuthContext);
+
+  const [strengthExercises, setStrenghtExercises] = useState({});
   const [strengthExercise, setStrenghtExercise] = useState({
     date: "",
     muscles: "antagonist",
@@ -21,6 +26,15 @@ const StrengthTrainingForm = ({ addExercise }) => {
     });
   };
 
+  const addStrengthExerciseFromForm = strengthExercise => {
+    setStrenghtExercises({
+      ...strengthExercises,
+      [`Route${Date.now()}`]: strengthExercise
+    });
+
+    addExerciseToDatabse(strengthExercise, Auth.userID, "strength", "Strength");
+  };
+
   const createExercise = e => {
     e.preventDefault();
 
@@ -28,7 +42,7 @@ const StrengthTrainingForm = ({ addExercise }) => {
       return;
     }
 
-    addExercise(strengthExercise);
+    addStrengthExerciseFromForm(strengthExercise);
 
     setStrenghtExercise({
       date: "",
@@ -47,7 +61,7 @@ const StrengthTrainingForm = ({ addExercise }) => {
         {error === true && <p>Input date</p>}
         <Input
           value={strengthExercise.date}
-          // primary={error}
+          primary={error}
           name="date"
           type="date"
           onChange={updateStrengthExercise}

@@ -1,39 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import StrengthTrainingForm from "./StrengthTrainingForm";
 import StrengthExercise from "./StrengthExercise";
 import TrainingPicker from "./../navbars/TrainingPicker";
+import { AuthContext } from "../../context/auth";
+import { firebaseConfig } from "./../../firebase";
+import { useDataFromDataBase } from "./../../utils/dataBaseUtils";
 
 const Strength = () => {
-  const [exercises, setExercises] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const Auth = useContext(AuthContext);
+  const user = window.sessionStorage.getItem(
+    `firebase:authUser:${firebaseConfig.apiKey}:[DEFAULT]`
+  );
 
-  const addExercise = exercise => {
-    setExercises({ ...exercises, [`Route${Date.now()}`]: exercise });
-  };
-
-  const updateExercise = (key, updatedRoute) => {
-    setExercises({ ...exercises, [key]: updatedRoute });
-  };
-
-  const deleteExercise = key => {
-    delete exercises[key];
-    setExercises({ ...exercises });
-  };
+  const exercises = useDataFromDataBase(user, setIsLoading, "strength");
 
   return (
     <div className="strength-training">
       <TrainingPicker />
       <h2>STRENGTH TRAINING</h2>
-      <StrengthTrainingForm addExercise={addExercise} />
+      <div>{Auth.userID}</div>
+      <StrengthTrainingForm />
       <ul className="exercises">
-        {Object.keys(exercises).map(key => (
-          <StrengthExercise
-            index={key}
-            key={key}
-            exerciseDetails={exercises[key]}
-            updateExercise={updateExercise}
-            deleteExercise={deleteExercise}
-          />
-        ))}
+        {isLoading &&
+          Object.keys(exercises).map(key => (
+            <StrengthExercise
+              index={key}
+              key={key}
+              exerciseDetails={exercises[key]}
+              user={user}
+            />
+          ))}
       </ul>
     </div>
   );

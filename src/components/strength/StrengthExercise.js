@@ -1,17 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { updateField, deleteField } from "./../../utils/dataBaseUtils";
 
 const StrengthExercise = props => {
+  const { date, muscles, type, sets, reps, rest } = props.exerciseDetails;
+
   const handleChange = e => {
     const updatedExercise = {
       ...props.exerciseDetails,
       [e.currentTarget.name]: e.currentTarget.value
     };
 
-    props.updateExercise(props.index, updatedExercise);
+    updateField(props.index, updatedExercise, props.user, "strength");
   };
-
-  const { date, muscles, type, sets, reps, rest } = props.exerciseDetails;
 
   return (
     <div className="exercise">
@@ -26,7 +27,7 @@ const StrengthExercise = props => {
       <input type="text" name="sets" onChange={handleChange} value={sets} />
       <input type="text" name="reps" onChange={handleChange} value={reps} />
       <input type="text" name="rest" onChange={handleChange} value={rest} />
-      <button onClick={() => props.deleteExercise(props.index)}>
+      <button onClick={() => deleteField(props.index, props.user, "strength")}>
         Remove exercise
       </button>
     </div>
