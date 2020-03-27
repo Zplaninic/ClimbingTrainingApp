@@ -3,7 +3,6 @@ import Button from "../../css/elements/Button";
 import { Form, Input, Select } from "../../css/elements/FormInput";
 import { validate } from "../../helper";
 import PropTypes from "prop-types";
-import firebaseApp from "./../../firebase";
 import { AuthContext } from "../../context/auth";
 import { addExerciseToDatabse } from "./../../utils/dataBaseUtils";
 
