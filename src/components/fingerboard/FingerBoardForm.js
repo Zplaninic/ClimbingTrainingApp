@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Button from "../../css/elements/Button";
 import PropTypes from "prop-types";
+import { addExerciseToDatabse } from "./../../utils/dataBaseUtils";
+import { AuthContext } from "../../context/auth";
 
 const FingerBoardForm = ({ addSession }) => {
-  const [fingerBoardSession, setFingerBoardState] = useState({
+  const Auth = useContext(AuthContext);
+
+  const [fingerBoardExercises, setFingerBoardExercises] = useState({});
+  const [fingerBoardExercise, setFingerBoardExercise] = useState({
+    date: "",
     setsNumber: "",
     workInterval: "",
     restInterval: "",
@@ -11,18 +17,32 @@ const FingerBoardForm = ({ addSession }) => {
   });
 
   const updateFingerBoardSession = e => {
-    setFingerBoardState({
-      ...fingerBoardSession,
+    setFingerBoardExercise({
+      ...fingerBoardExercise,
       [e.target.name]: e.target.value
     });
   };
 
-  const createSession = event => {
-    event.preventDefault();
+  const addExerciseFromForm = fingerBoardExercises => {
+    setFingerBoardExercises({
+      ...fingerBoardExercises,
+      [`Finger${Date.now()}`]: fingerBoardExercise
+    });
 
-    addSession(fingerBoardSession);
+    addExerciseToDatabse(
+      fingerBoardExercise,
+      Auth.userID,
+      "fingerboard",
+      "Finger"
+    );
+  };
 
-    setFingerBoardState({
+  const createSession = e => {
+    e.preventDefault();
+
+    addExerciseFromForm(fingerBoardExercise);
+
+    setFingerBoardExercise({
       setsNumber: "",
       workInterval: "",
       restInterval: "",
@@ -33,31 +53,37 @@ const FingerBoardForm = ({ addSession }) => {
   return (
     <form className="fingerboard-training" onSubmit={createSession}>
       <input
+        value={fingerBoardExercise.date}
+        name="date"
+        type="date"
+        onChange={updateFingerBoardSession}
+      />
+      <input
         name="setsNumber"
-        type="number"
+        type="text"
         placeholder="Sets"
-        value={fingerBoardSession.setsNumber}
+        value={fingerBoardExercise.setsNumber}
         onChange={updateFingerBoardSession}
       />
       <input
         name="workInterval"
-        type="number"
+        type="text"
         placeholder="Work interval"
-        value={fingerBoardSession.workInterval}
+        value={fingerBoardExercise.workInterval}
         onChange={updateFingerBoardSession}
       />
       <input
         name="restInterval"
-        type="number"
+        type="text"
         placeholder="Rest interval"
-        value={fingerBoardSession.restInterval}
+        value={fingerBoardExercise.restInterval}
         onChange={updateFingerBoardSession}
       />
       <input
         name="pauseBetweenSets"
-        type="number"
+        type="text"
         placeholder="Pause time"
-        value={fingerBoardSession.pauseBetweenSets}
+        value={fingerBoardExercise.pauseBetweenSets}
         onChange={updateFingerBoardSession}
       />
       <Button type="submit">Add Session</Button>
