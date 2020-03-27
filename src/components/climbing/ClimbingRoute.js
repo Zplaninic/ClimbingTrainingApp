@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { updateField, deleteField } from "./../../utils/dataBaseUtils";
 
 const ClimbingRoute = props => {
   const { date, name, grade, movements, type, restTime } = props.routeDetails;
@@ -11,8 +12,7 @@ const ClimbingRoute = props => {
       ...props.routeDetails,
       [e.currentTarget.name]: e.currentTarget.value
     };
-
-    props.updateRoute(props.index, updatedRoute);
+    updateField(props.index, updatedRoute, props.user, "climbing");
   };
 
   return (
@@ -33,9 +33,9 @@ const ClimbingRoute = props => {
         value={restTime}
         onChange={handleChange}
       />
-      {/* <button onClick={() => props.deleteRoute(props.index)}>
+      <button onClick={() => deleteField(props.index, props.user, "climbing")}>
         Remove route
-      </button> */}
+      </button>
     </div>
   );
 };

@@ -5,6 +5,7 @@ import { validate } from "../../helper";
 import PropTypes from "prop-types";
 import firebaseApp from "./../../firebase";
 import { AuthContext } from "../../context/auth";
+import { addExerciseToDatabse } from "./../../utils/dataBaseUtils";
 
 const ClimbingTrainingForm = () => {
   const Auth = useContext(AuthContext);
@@ -29,16 +30,7 @@ const ClimbingTrainingForm = () => {
   const addRouteFromForm = route => {
     setRoutes({ ...routes, [`Route${Date.now()}`]: route });
 
-    firebaseApp
-      .firestore()
-      .collection("users")
-      .doc(Auth.userID)
-      .set(
-        {
-          climbing: { [`Route${Date.now()}`]: route }
-        },
-        { merge: true }
-      );
+    addExerciseToDatabse(route, Auth.userID, "climbing", "Route");
   };
 
   const createRoute = e => {
@@ -67,7 +59,7 @@ const ClimbingTrainingForm = () => {
       <Form className="route-edit" onSubmit={createRoute}>
         {error === true && <p>Input date</p>}
         <Input
-          // primary={error}
+          primary={error}
           value={climbingRoute.date}
           name="date"
           type="date"
