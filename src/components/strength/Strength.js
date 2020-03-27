@@ -23,6 +23,7 @@ const Strength = () => {
       <StrengthTrainingForm />
       <ul className="exercises">
         {isLoading &&
+          exercises !== undefined &&
           Object.keys(exercises).map(key => (
             <StrengthExercise
               index={key}

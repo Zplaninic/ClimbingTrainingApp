@@ -25,6 +25,7 @@ const Climbing = () => {
       <ClimbingTrainingForm />
       <div className="routes">
         {isLoading &&
+          routes !== undefined &&
           Object.keys(routes).map(key => (
             <ClimbingRoute
               index={key}
