@@ -1,10 +1,16 @@
 import React, { useState, useContext } from "react";
-import Button from "../../css/elements/Button";
 import { Form, Input, Select } from "../../css/elements/FormInput";
 import { validate } from "../../helper";
 import PropTypes from "prop-types";
 import { addExerciseToDatabse } from "./../../utils/dataBaseUtils";
 import { AuthContext } from "../../context/auth";
+import {
+  Button,
+  SectionForm,
+  Fieldset,
+  Label,
+  Legend
+} from "./../../css/elements/TrainingPages";
 
 const StrengthTrainingForm = ({ addExercise }) => {
   const Auth = useContext(AuthContext);
@@ -56,61 +62,65 @@ const StrengthTrainingForm = ({ addExercise }) => {
 
   const error = validate(strengthExercise.date);
   return (
-    <React.Fragment>
+    <SectionForm>
       <Form className="strength-exercise" onSubmit={createExercise}>
-        {error === true && <p>Input date</p>}
-        <Input
-          value={strengthExercise.date}
-          primary={error}
-          name="date"
-          type="date"
-          onChange={updateStrengthExercise}
-        />
-        <Select
-          name="muscles"
-          value={strengthExercise.antagonist}
-          onChange={updateStrengthExercise}
-        >
-          <option value="antagonist">Antagonist</option>
-          <option value="core">Core</option>
-          <option value="upperBoady">Upper body</option>
-          <option value="flexibility">Flexibility</option>
-        </Select>
-        <Input
-          name="type"
-          type="text"
-          placeholder="Exercise"
-          value={strengthExercise.type}
-          required
-          onChange={updateStrengthExercise}
-        />
-        <Input
-          name="sets"
-          type="number"
-          min="0"
-          placeholder="Sets"
-          value={strengthExercise.sets}
-          onChange={updateStrengthExercise}
-        />
-        <Input
-          name="reps"
-          type="number"
-          min="0"
-          placeholder="Repetitions"
-          value={strengthExercise.reps}
-          onChange={updateStrengthExercise}
-        />
-        <Input
-          name="rest"
-          type="number"
-          min="0"
-          placeholder="Rest time"
-          value={strengthExercise.rest}
-          onChange={updateStrengthExercise}
-        />
-        <Button type="submit">Add Route</Button>
+        <Fieldset>
+          <Legend>Your strength routine</Legend>
+          <Label>Date</Label>
+          <Input
+            value={strengthExercise.date}
+            primary={error}
+            name="date"
+            type="date"
+            onChange={updateStrengthExercise}
+          />
+          <Label>Type of exercises</Label>
+          <Select
+            name="muscles"
+            value={strengthExercise.antagonist}
+            onChange={updateStrengthExercise}
+          >
+            <option value="antagonist">Antagonist</option>
+            <option value="core">Core</option>
+            <option value="upperBoady">Upper body</option>
+            <option value="flexibility">Flexibility</option>
+          </Select>
+          <Label>Name Exercise</Label>
+          <Input
+            name="type"
+            type="text"
+            value={strengthExercise.type}
+            required
+            onChange={updateStrengthExercise}
+          />
+          <Label>Sets</Label>
+          <Input
+            name="sets"
+            type="number"
+            min="0"
+            value={strengthExercise.sets}
+            onChange={updateStrengthExercise}
+          />
+          <Label>Repetitions</Label>
+          <Input
+            name="reps"
+            type="number"
+            min="0"
+            value={strengthExercise.reps}
+            onChange={updateStrengthExercise}
+          />
+          <Label>Rest(s)</Label>
+          <Input
+            name="rest"
+            type="number"
+            min="0"
+            value={strengthExercise.rest}
+            onChange={updateStrengthExercise}
+          />
+          <Button type="submit">Add Route</Button>
+        </Fieldset>
       </Form>
-    </React.Fragment>
+    </SectionForm>
   );
 };
 

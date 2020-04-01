@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 const Card = styled.div`
-  box-sizing: border-box;
   max-width: 410px;
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 `;
 
 const Form = styled.form`
@@ -21,10 +21,12 @@ const Input = styled.input`
   border: 1px solid #999;
   margin-bottom: 1rem;
   font-size: 0.8rem;
+  border-radius: 3px;
+  font-family: "Montserrat", sans-serif;
 `;
 
 const Button = styled.button`
-  background: linear-gradient(to bottom, #6371c7, #5563c1);
+  background: #3f85cd;
   border-color: #3f4eae;
   border-radius: 3px;
   padding: 1rem;
@@ -33,6 +35,7 @@ const Button = styled.button`
   width: 100%;
   margin-bottom: 1rem;
   font-size: 0.8rem;
+  font-family: "Montserrat", sans-serif;
 `;
 
 const Logo = styled.img`

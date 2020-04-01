@@ -1,6 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { updateField, deleteField } from "./../../utils/dataBaseUtils";
+import {
+  RemoveButton,
+  InputData,
+  InputNames,
+  Exercise
+} from "./../../css/elements/TrainingPages";
 
 const StrengthExercise = props => {
   const { date, muscles, type, sets, reps, rest } = props.exerciseDetails;
@@ -15,22 +21,30 @@ const StrengthExercise = props => {
   };
 
   return (
-    <div className="exercise">
-      <input type="text" name="date" onChange={handleChange} value={date} />
-      <input
+    <Exercise className="exercise">
+      <InputNames>Date</InputNames>
+      <InputData type="text" name="date" onChange={handleChange} value={date} />
+      <InputNames>Muscles</InputNames>
+      <InputData
         type="text"
         name="muscles"
         onChange={handleChange}
         value={muscles}
       />
-      <input type="text" name="type" onChange={handleChange} value={type} />
-      <input type="text" name="sets" onChange={handleChange} value={sets} />
-      <input type="text" name="reps" onChange={handleChange} value={reps} />
-      <input type="text" name="rest" onChange={handleChange} value={rest} />
-      <button onClick={() => deleteField(props.index, props.user, "strength")}>
+      <InputNames>Name Exercise</InputNames>
+      <InputData type="text" name="type" onChange={handleChange} value={type} />
+      <InputNames>Sets</InputNames>
+      <InputData type="text" name="sets" onChange={handleChange} value={sets} />
+      <InputNames>Repetitions</InputNames>
+      <InputData type="text" name="reps" onChange={handleChange} value={reps} />
+      <InputNames>Rest(s)</InputNames>
+      <InputData type="text" name="rest" onChange={handleChange} value={rest} />
+      <RemoveButton
+        onClick={() => deleteField(props.index, props.user, "strength")}
+      >
         Remove exercise
-      </button>
-    </div>
+      </RemoveButton>
+    </Exercise>
   );
 };
 
