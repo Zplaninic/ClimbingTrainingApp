@@ -1,6 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { updateField, deleteField } from "./../../utils/dataBaseUtils";
+import {
+  RemoveButton,
+  InputData,
+  InputNames,
+  Exercise
+} from "./../../css/elements/TrainingPages";
 
 const ClimbingRoute = props => {
   const { date, name, grade, movements, type, restTime } = props.routeDetails;
@@ -16,27 +22,40 @@ const ClimbingRoute = props => {
   };
 
   return (
-    <div className="route">
-      <input type="text" name="date" value={date} onChange={handleChange} />
-      <input type="text" name="name" value={name} onChange={handleChange} />
-      <input type="text" name="grade" value={grade} onChange={handleChange} />
-      <input
+    <Exercise className="route">
+      <InputNames>Date</InputNames>
+      <InputData type="text" name="date" value={date} onChange={handleChange} />
+      <InputNames>Name</InputNames>
+      <InputData type="text" name="name" value={name} onChange={handleChange} />
+      <InputNames>Grade</InputNames>
+      <InputData
+        type="text"
+        name="grade"
+        value={grade}
+        onChange={handleChange}
+      />
+      <InputNames>Movements</InputNames>
+      <InputData
         type="text"
         name="movements"
         value={movements}
         onChange={handleChange}
       />
-      <input type="text" name="type" value={type} onChange={handleChange} />
-      <input
+      <InputNames>Type</InputNames>
+      <InputData type="text" name="type" value={type} onChange={handleChange} />
+      <InputNames>Rest(s)</InputNames>
+      <InputData
         type="text"
         name="restTime"
         value={restTime}
         onChange={handleChange}
       />
-      <button onClick={() => deleteField(props.index, props.user, "climbing")}>
+      <RemoveButton
+        onClick={() => deleteField(props.index, props.user, "climbing")}
+      >
         Remove route
-      </button>
-    </div>
+      </RemoveButton>
+    </Exercise>
   );
 };
 

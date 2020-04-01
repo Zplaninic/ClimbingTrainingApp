@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Climbing from "./climbing/Climbing";
 import Strength from "./strength/Strength";
 import Fingerboard from "./fingerboard/Fingerboard";
-import NotFound from "./stateless/NotFound";
+import NotFound from "./basic/NotFound";
 import Home from "./Home";
 import Analysis from "./analysis/Analysis";
 import Admin from "./private/Admin";
@@ -12,6 +12,9 @@ import PrivateRoute from "./private/PrivateRoute";
 import Login from "./authentication/Login";
 import Signup from "./authentication/Signup";
 import { firebaseConfig } from "./../firebase";
+import Header from "./../components/basic/Header";
+import { GlobalStyle } from "./../css/style";
+import Footer from "./../components/basic/Footer";
 
 const App = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -43,7 +46,8 @@ const App = () => {
         setUserID
       }}
     >
-      Is logged in? {JSON.stringify(isLoggedIn)}
+      <GlobalStyle></GlobalStyle>
+      <Header></Header>
       <Router>
         <React.Fragment>
           <Switch>
@@ -84,65 +88,9 @@ const App = () => {
           </Switch>
         </React.Fragment>
       </Router>
+      <Footer></Footer>
     </AuthContext.Provider>
   );
 };
 
 export default App;
-
-// state = {
-//   uid: null
-// };
-
-// componentDidMount() {
-//   firebase.auth().onAuthStateChanged(user => {
-//     if (user) {
-//       this.authHandler({ user });
-//     }
-//   });
-// }
-
-// authHandler = async authData => {
-//   const userObject = await base.fetch(`${authData.user.uid}`, {});
-
-//   this.setState({
-//     uid: authData.user.uid
-//   });
-
-//   if (Object.keys(userObject).length === 0) {
-//     base.post(`${authData.user.uid}`, {
-//       data: { climbing: "", strength: "", fingerboard: "" }
-//     });
-//   }
-// };
-
-// authenticateWithSocialNetwork = provider => {
-//   const authProvider = new firebase.auth[`${provider}AuthProvider`]();
-//   console.log(authProvider);
-
-//   firebaseApp
-//     .auth()
-//     .signInWithPopup(authProvider)
-//     .then(this.authHandler);
-// };
-
-// authenticateWithEmailAndPass = (email, password) => {
-//   console.log(email, password);
-//   firebaseApp
-//     .auth()
-//     .createUserWithEmailAndPassword(email, password)
-//     .then(this.authHandler);
-// };
-
-// logout = async () => {
-//   console.log("logout");
-//   await firebase.auth().signOut();
-//   this.setState({ uid: null });
-// };
-
-// if (!this.state.uid) {
-//   return (
-//     <Router>
-//     </Router>
-//   );
-// }

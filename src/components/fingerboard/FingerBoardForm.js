@@ -1,8 +1,15 @@
 import React, { useState, useContext } from "react";
-import Button from "../../css/elements/Button";
 import PropTypes from "prop-types";
 import { addExerciseToDatabse } from "./../../utils/dataBaseUtils";
 import { AuthContext } from "../../context/auth";
+import { Form, Input } from "../../css/elements/FormInput";
+import {
+  Button,
+  SectionForm,
+  Fieldset,
+  Label,
+  Legend
+} from "./../../css/elements/TrainingPages";
 
 const FingerBoardForm = ({ addSession }) => {
   const Auth = useContext(AuthContext);
@@ -51,43 +58,51 @@ const FingerBoardForm = ({ addSession }) => {
   };
 
   return (
-    <form className="fingerboard-training" onSubmit={createSession}>
-      <input
-        value={fingerBoardExercise.date}
-        name="date"
-        type="date"
-        onChange={updateFingerBoardSession}
-      />
-      <input
-        name="setsNumber"
-        type="text"
-        placeholder="Sets"
-        value={fingerBoardExercise.setsNumber}
-        onChange={updateFingerBoardSession}
-      />
-      <input
-        name="workInterval"
-        type="text"
-        placeholder="Work interval"
-        value={fingerBoardExercise.workInterval}
-        onChange={updateFingerBoardSession}
-      />
-      <input
-        name="restInterval"
-        type="text"
-        placeholder="Rest interval"
-        value={fingerBoardExercise.restInterval}
-        onChange={updateFingerBoardSession}
-      />
-      <input
-        name="pauseBetweenSets"
-        type="text"
-        placeholder="Pause time"
-        value={fingerBoardExercise.pauseBetweenSets}
-        onChange={updateFingerBoardSession}
-      />
-      <Button type="submit">Add Session</Button>
-    </form>
+    <SectionForm>
+      <Form className="fingerboard-training" onSubmit={createSession}>
+        <Legend>Your fingerboard set</Legend>
+        <Fieldset>
+          <Label>Date</Label>
+          <Input
+            value={fingerBoardExercise.date}
+            name="date"
+            type="date"
+            required
+            onChange={updateFingerBoardSession}
+          />
+          <Label>Number of sets</Label>
+          <Input
+            name="setsNumber"
+            type="text"
+            value={fingerBoardExercise.setsNumber}
+            onChange={updateFingerBoardSession}
+          />
+          <Label>Work interval</Label>
+          <Input
+            name="workInterval"
+            type="text"
+            value={fingerBoardExercise.workInterval}
+            onChange={updateFingerBoardSession}
+          />
+          <Label>Rest time </Label>
+          <Input
+            name="restInterval"
+            type="text"
+            value={fingerBoardExercise.restInterval}
+            onChange={updateFingerBoardSession}
+          />
+          <Label>Pause between sets</Label>
+          <Input
+            name="pauseBetweenSets"
+            type="text"
+            placeholder="Pause time"
+            value={fingerBoardExercise.pauseBetweenSets}
+            onChange={updateFingerBoardSession}
+          />
+          <Button type="submit">Add Session</Button>
+        </Fieldset>
+      </Form>
+    </SectionForm>
   );
 };
 

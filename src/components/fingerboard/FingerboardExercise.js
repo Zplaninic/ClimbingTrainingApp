@@ -1,5 +1,11 @@
 import React from "react";
 import { updateField, deleteField } from "./../../utils/dataBaseUtils";
+import {
+  RemoveButton,
+  InputData,
+  InputNames,
+  Exercise
+} from "./../../css/elements/TrainingPages";
 
 const FingerboardExercise = props => {
   const {
@@ -21,38 +27,43 @@ const FingerboardExercise = props => {
   };
 
   return (
-    <div className="fingerBoardExercise">
-      <input type="date" name="date" value={date} onChange={handleChange} />
-      <input
+    <Exercise className="fingerBoardExercise">
+      <InputNames>Date</InputNames>
+      <InputData type="date" name="date" value={date} onChange={handleChange} />
+      <InputNames>Number of sets</InputNames>
+      <InputData
         type="text"
         name="setsNumber"
         value={setsNumber}
         onChange={handleChange}
       />
-      <input
+      <InputNames>Work interval</InputNames>
+      <InputData
         type="text"
         name="workInterval"
         value={workInterval}
         onChange={handleChange}
       />
-      <input
+      <InputNames>Rest time</InputNames>
+      <InputData
         type="text"
         name="restInterval"
         value={restInterval}
         onChange={handleChange}
       />
-      <input
+      <InputNames>Pause between sets</InputNames>
+      <InputData
         type="text"
         name="pauseBetweenSets"
         value={pauseBetweenSets}
         onChange={handleChange}
       />
-      <button
+      <RemoveButton
         onClick={() => deleteField(props.index, props.user, "fingerboard")}
       >
         Remove route
-      </button>
-    </div>
+      </RemoveButton>
+    </Exercise>
   );
 };
 

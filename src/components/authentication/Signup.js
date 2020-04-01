@@ -11,6 +11,7 @@ import { validateAuthentication } from "./../../utils/validationUtils";
 import firebaseApp from "./../../firebase";
 import firebase from "firebase";
 import { AuthContext } from "./../../context/auth";
+import styled from "styled-components";
 
 const Signup = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -19,7 +20,6 @@ const Signup = ({ history }) => {
 
   const [isEmailError, setIsEmailError] = useState("");
   const [isPasswordError, setIsPasswordError] = useState("");
-  const [isConfirmPasswordError, setIsConfirmPasswordError] = useState("");
   const [isPasswordConfirmed, setIsPasswordConfirmed] = useState(true);
   const [error, setErrors] = useState("");
 
@@ -102,7 +102,6 @@ const Signup = ({ history }) => {
           type="password"
           placeholder="password again"
           onChange={e => {
-            validateAuthentication(e, setIsConfirmPasswordError);
             setConfirmPassword(e.target.value);
           }}
         />
@@ -136,25 +135,26 @@ const Signup = ({ history }) => {
       </Form>
       <Link to="/login">Already have an account?</Link>
       {(isEmailError === "" || isEmailError === false) && (
-        <p>Email must be a valid address, e.g. me@mydomain.com</p>
+        <ErrorTag>Email must be a valid address, e.g. me@mydomain.com</ErrorTag>
       )}
       {(isPasswordError === "" || isPasswordError === false) && (
-        <p>
+        <ErrorTag>
           Password must alphanumeric (@, _ and - are also allowed) and be 8 - 20
           characters
-        </p>
+        </ErrorTag>
       )}
-      {(isConfirmPasswordError === "" || isConfirmPasswordError === false) && (
-        <p>
-          Password must alphanumeric (@, _ and - are also allowed) and be 8 - 20
-          characters
-        </p>
+      {!isPasswordConfirmed && (
+        <ErrorTag>Both passwords should be the same</ErrorTag>
       )}
-      {!isPasswordConfirmed && <div>Both passwords should be the same</div>}
-      <span>{error}</span>
+      <ErrorTag>{error}</ErrorTag>
     </Card>
   );
 };
+
+const ErrorTag = styled.p`
+  margin: 10px;
+  color: #c8331b;
+`;
 
 export default Signup;
 

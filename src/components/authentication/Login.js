@@ -97,7 +97,13 @@ const Login = ({ history }) => {
           />
           Login With Twitter
         </Button>
-        <Button>Login With Email</Button>
+        <Button>
+          <SocialButtonImage
+            src="https://cdn4.iconfinder.com/data/icons/contact-us-19/48/71-512.png"
+            alt="logo"
+          />
+          Login With Email
+        </Button>
       </Form>
       <Link to="/signup">Don't have an account?</Link>
       <span>{error}</span>
