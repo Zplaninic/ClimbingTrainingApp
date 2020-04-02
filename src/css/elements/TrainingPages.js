@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { device } from "./../device";
 
 export const HomeTraining = styled.div`
   display: flex;
@@ -6,6 +7,12 @@ export const HomeTraining = styled.div`
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   padding: 1em;
+
+  @media ${device.laptop} {
+    display: grid;
+    grid-template-columns: 1.5fr 2.5fr;
+    grid-gap: 3em;
+  }
 `;
 
 export const Section = styled.section`
@@ -28,7 +35,7 @@ export const RemoveButton = styled.button`
 
 export const InputData = styled.input`
   width: 60%;
-  height: 7%;
+  min-height: 9px;
   border-style: solid;
   border-width: 1px;
   border-color: #180c5c;
@@ -39,9 +46,13 @@ export const InputData = styled.input`
 
 export const InputNames = styled.div`
   width: 40%;
-  height: 7%;
+  min-height: 9px;
   font-size: 0.7em;
   margin-bottom: 5px;
+
+  @media ${device.laptop} {
+    width: 30%;
+  }
 `;
 
 export const Exercise = styled.div`
