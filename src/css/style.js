@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { device } from "./device";
 
 //https://jsramblings.com/how-to-use-media-queries-with-styled-components/
 
@@ -33,5 +34,20 @@ h1,h2,h3 {
 
 #wrapper {
   margin: 0 auto;
+}
+/* Small devices (tablets, 768px and up) */
+@media ${device.mobileL} { 
+  #wrapper {
+      width: 97%;
+      max-width: 767px;
+  }
+}
+
+@media ${device.laptop} { 
+  #wrapper {
+    width: 97%;
+    max-width: 2560px;
+    float: none;
+  }
 }
 `;

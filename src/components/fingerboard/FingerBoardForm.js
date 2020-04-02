@@ -30,7 +30,7 @@ const FingerBoardForm = ({ addSession }) => {
     });
   };
 
-  const addExerciseFromForm = fingerBoardExercises => {
+  const addExerciseFromForm = fingerBoardExercise => {
     setFingerBoardExercises({
       ...fingerBoardExercises,
       [`Finger${Date.now()}`]: fingerBoardExercise
