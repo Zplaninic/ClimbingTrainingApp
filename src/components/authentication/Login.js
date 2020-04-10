@@ -10,6 +10,7 @@ import {
 import firebaseApp from "./../../firebase";
 import firebase from "firebase";
 import { AuthContext } from "./../../context/auth";
+import PropTypes from "prop-types";
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -109,6 +110,10 @@ const Login = ({ history }) => {
       <span>{error}</span>
     </Card>
   );
+};
+
+Login.propTypes = {
+  history: PropTypes.object
 };
 
 export default Login;

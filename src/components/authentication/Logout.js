@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Card, Button } from "./../../css/elements/AuthForm";
 import firebase from "firebase";
 import { AuthContext } from "./../../context/auth";
+import PropTypes from "prop-types";
 
 const Logout = ({ history }) => {
   const Auth = useContext(AuthContext);
@@ -21,5 +22,9 @@ const Logout = ({ history }) => {
       </Button>
     </Card>
   );
+};
+
+Logout.propTypes = {
+  history: PropTypes.object
 };
 export default Logout;

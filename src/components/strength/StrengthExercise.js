@@ -9,6 +9,7 @@ import {
 } from "./../../css/elements/TrainingPages";
 
 const StrengthExercise = props => {
+  console.log(props);
   const { date, muscles, type, sets, reps, rest } = props.exerciseDetails;
 
   const handleChange = e => {
@@ -57,9 +58,7 @@ StrengthExercise.propTypes = {
     reps: PropTypes.string,
     rest: PropTypes.string
   }),
-  updateExercise: PropTypes.func,
-  index: PropTypes.string,
-  deleteExercise: PropTypes.func
+  index: PropTypes.string
 };
 
 export default StrengthExercise;

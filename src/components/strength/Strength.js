@@ -5,6 +5,7 @@ import TrainingPicker from "./../navbars/TrainingPicker";
 import { firebaseConfig } from "./../../firebase";
 import { useDataFromDataBase } from "./../../utils/dataBaseUtils";
 import { HomeTraining, Section } from "./../../css/elements/TrainingPages";
+import PropTypes from "prop-types";
 
 const Strength = props => {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +36,12 @@ const Strength = props => {
       </HomeTraining>
     </React.Fragment>
   );
+};
+
+Strength.propTypes = {
+  match: PropTypes.object,
+  location: PropTypes.object,
+  history: PropTypes.object
 };
 
 export default Strength;

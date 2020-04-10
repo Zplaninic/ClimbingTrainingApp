@@ -12,6 +12,7 @@ import firebaseApp from "./../../firebase";
 import firebase from "firebase";
 import { AuthContext } from "./../../context/auth";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const Signup = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -155,6 +156,9 @@ const ErrorTag = styled.p`
   margin: 10px;
   color: #c8331b;
 `;
+Signup.propTypes = {
+  history: PropTypes.object
+};
 
 export default Signup;
 

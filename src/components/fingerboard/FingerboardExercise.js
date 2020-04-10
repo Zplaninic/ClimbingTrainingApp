@@ -6,6 +6,7 @@ import {
   InputNames,
   Exercise
 } from "./../../css/elements/TrainingPages";
+import PropTypes from "prop-types";
 
 const FingerboardExercise = props => {
   const {
@@ -65,6 +66,17 @@ const FingerboardExercise = props => {
       </RemoveButton>
     </Exercise>
   );
+};
+
+FingerboardExercise.propTypes = {
+  index: PropTypes.string.isRequired,
+  fingerDetails: PropTypes.shape({
+    pauseBetweenSets: PropTypes.string.isRequired,
+    restInterval: PropTypes.string.isRequired,
+    date: PropTypes.string,
+    setsNumber: PropTypes.string.isRequired,
+    workInterval: PropTypes.string.isRequired
+  })
 };
 
 export default FingerboardExercise;

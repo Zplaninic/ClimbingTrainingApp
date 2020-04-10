@@ -60,15 +60,14 @@ const ClimbingRoute = props => {
 };
 
 ClimbingRoute.propTypes = {
-  updateRoute: PropTypes.func,
-  deleteRoute: PropTypes.func,
+  index: PropTypes.string.isRequired,
   routeDetails: PropTypes.shape({
-    grade: PropTypes.string,
-    movements: PropTypes.string,
-    name: PropTypes.string,
-    restTime: PropTypes.string,
-    type: PropTypes.string,
-    date: PropTypes.string
+    grade: PropTypes.string.isRequired,
+    movements: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    rest: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired
   })
 };
 
