@@ -11,7 +11,6 @@ import { AuthContext } from "./../context/auth";
 import PrivateRoute from "./private/PrivateRoute";
 import Login from "./authentication/Login";
 import Signup from "./authentication/Signup";
-import { firebaseConfig } from "./../firebase";
 import Header from "./../components/basic/Header";
 import { GlobalStyle } from "./../css/style";
 import Footer from "./../components/basic/Footer";
@@ -19,15 +18,13 @@ import Footer from "./../components/basic/Footer";
 const App = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [userID, setUserID] = useState("");
 
   const readSession = () => {
-    const user = window.sessionStorage.getItem(
-      `firebase:authUser:${firebaseConfig.apiKey}:[DEFAULT]`
-    );
-    if (user) {
+    const user = window.sessionStorage.getItem("login");
+    let token = JSON.parse(user);
+
+    if (token) {
       setLoggedIn(true);
-      setUserID(JSON.parse(user).uid);
     } else {
       setIsLoading(false);
     }
@@ -41,9 +38,7 @@ const App = () => {
         isLoggedIn,
         setLoggedIn,
         isLoading,
-        setIsLoading,
-        userID,
-        setUserID
+        setIsLoading
       }}
     >
       <GlobalStyle></GlobalStyle>
