@@ -8,11 +8,10 @@ import {
   SocialButtonImage
 } from "./../../css/elements/AuthForm";
 import { validateAuthentication } from "./../../utils/validationUtils";
-import firebaseApp from "./../../firebase";
-import firebase from "firebase";
 import { AuthContext } from "./../../context/auth";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 const Signup = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -33,46 +32,22 @@ const Signup = ({ history }) => {
       setPassword("");
       setConfirmPassword("");
     } else {
-      firebaseApp
-        .auth()
-        .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-        .then(() => {
-          firebaseApp
-            .auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then(res => {
-              if (res.user) {
-                Auth.setUserID(res.user.uid);
-                Auth.setLoggedIn(true);
-                Auth.setIsLoading(false);
-                history.push("/");
-              }
-            })
-            .catch(e => {
-              setErrors(e.message);
-            });
+      axios
+        .post("http://localhost:8080/signup", { email, password })
+        .then(function(res) {
+          console.log("signup", res.data);
+          sessionStorage.setItem("login", JSON.stringify(res.data));
+          Auth.setLoggedIn(true);
+          Auth.setIsLoading(false);
+          history.push("/");
+        })
+        .catch(function(e) {
+          setEmail("");
+          setPassword("");
+          setConfirmPassword("");
+          setErrors(e.message);
         });
     }
-  };
-
-  const authenticateWithSocialNetwork = provider => {
-    const authProvider = new firebase.auth[`${provider}AuthProvider`]();
-
-    firebaseApp
-      .auth()
-      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-      .then(() => {
-        firebaseApp
-          .auth()
-          .signInWithPopup(authProvider)
-          .then(res => {
-            Auth.setUserID(res.user.uid);
-            Auth.setLoggedIn(true);
-            Auth.setIsLoading(false);
-            history.push("/");
-          })
-          .catch(e => setErrors(e.message));
-      });
   };
   return (
     <Card>
@@ -106,26 +81,6 @@ const Signup = ({ history }) => {
             setConfirmPassword(e.target.value);
           }}
         />
-        <Button
-          onClick={() => authenticateWithSocialNetwork("Github")}
-          type="button"
-        >
-          <SocialButtonImage
-            src="https://seeklogo.com/images/G/github-logo-45146A3FBE-seeklogo.com.png"
-            alt="logo"
-          />
-          Join With Github
-        </Button>
-        <Button
-          onClick={() => authenticateWithSocialNetwork("Twitter")}
-          type="button"
-        >
-          <SocialButtonImage
-            src="https://sevilla.2019-2022.org/wp-content/uploads/2016/07/Logo-twitter.svg_.png"
-            alt="logo"
-          />
-          Join With Twitter
-        </Button>
         <Button type="submit">
           <SocialButtonImage
             src="https://cdn4.iconfinder.com/data/icons/contact-us-19/48/71-512.png"
@@ -161,5 +116,3 @@ Signup.propTypes = {
 };
 
 export default Signup;
-
-// https://cdn4.iconfinder.com/data/icons/contact-us-19/48/71-512.png

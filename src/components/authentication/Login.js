@@ -7,10 +7,9 @@ import {
   Button,
   SocialButtonImage
 } from "./../../css/elements/AuthForm";
-import firebaseApp from "./../../firebase";
-import firebase from "firebase";
 import { AuthContext } from "./../../context/auth";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -21,46 +20,22 @@ const Login = ({ history }) => {
 
   const handleForm = e => {
     e.preventDefault();
-    firebaseApp
-      .auth()
-      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-      .then(() => {
-        firebaseApp
-          .auth()
-          .signInWithEmailAndPassword(email, password)
-          .then(res => {
-            if (res.user) {
-              Auth.setUserID(res.user.uid);
-              Auth.setLoggedIn(true);
-              Auth.setIsLoading(false);
-              history.push("/");
-            }
-          })
-          .catch(e => {
-            setErrors(e.message);
-          });
+
+    axios
+      .post("http://localhost:8080/signin", { email, password })
+      .then(function(res) {
+        sessionStorage.setItem("login", JSON.stringify(res.data));
+        Auth.setLoggedIn(true);
+        Auth.setIsLoading(false);
+        history.push("/");
+      })
+      .catch(function(e) {
+        setEmail("");
+        setPassword("");
+        setErrors(e.message);
       });
   };
 
-  const authenticateWithSocialNetwork = provider => {
-    const authProvider = new firebase.auth[`${provider}AuthProvider`]();
-
-    firebaseApp
-      .auth()
-      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-      .then(() => {
-        firebaseApp
-          .auth()
-          .signInWithPopup(authProvider)
-          .then(res => {
-            Auth.setUserID(res.user.uid);
-            Auth.setLoggedIn(true);
-            Auth.setIsLoading(false);
-            history.push("/");
-          })
-          .catch(e => setErrors(e.message));
-      });
-  };
   return (
     <Card>
       <Form onSubmit={e => handleForm(e)}>
@@ -78,26 +53,6 @@ const Login = ({ history }) => {
           placeholder="password"
           onChange={e => setPassword(e.target.value)}
         />
-        <Button
-          onClick={() => authenticateWithSocialNetwork("Github")}
-          type="button"
-        >
-          <SocialButtonImage
-            src="https://seeklogo.com/images/G/github-logo-45146A3FBE-seeklogo.com.png"
-            alt="logo"
-          />
-          Login With Github
-        </Button>
-        <Button
-          onClick={() => authenticateWithSocialNetwork("Twitter")}
-          type="button"
-        >
-          <SocialButtonImage
-            src="https://sevilla.2019-2022.org/wp-content/uploads/2016/07/Logo-twitter.svg_.png"
-            alt="logo"
-          />
-          Login With Twitter
-        </Button>
         <Button>
           <SocialButtonImage
             src="https://cdn4.iconfinder.com/data/icons/contact-us-19/48/71-512.png"
