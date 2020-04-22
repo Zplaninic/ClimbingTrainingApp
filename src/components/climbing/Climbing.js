@@ -2,34 +2,38 @@ import React, { useState } from "react";
 import ClimbingTrainingForm from "./ClimbingTrainingForm";
 import ClimbingRoute from "./ClimbingRoute";
 import TrainingPicker from "./../navbars/TrainingPicker";
-import { firebaseConfig } from "./../../firebase";
-import { useDataFromDataBase } from "./../../utils/dataBaseUtils";
 import { HomeTraining, Section } from "./../../css/elements/TrainingPages";
+import { useDataFromMongo } from "./../../utils/db";
 import PropTypes from "prop-types";
 
 const Climbing = props => {
   const [isLoading, setIsLoading] = useState(false);
-  const user = window.sessionStorage.getItem(
-    `firebase:authUser:${firebaseConfig.apiKey}:[DEFAULT]`
-  );
+  const [isUpdatedFromDatase, setIsUpdatedFromDatabase] = useState(false);
   const path = props.location.pathname;
 
-  const routes = useDataFromDataBase(user, setIsLoading, "climbing");
+  const routes = useDataFromMongo(
+    "http://localhost:8080/api/climbing/route",
+    setIsLoading,
+    isUpdatedFromDatase,
+    setIsUpdatedFromDatabase
+  );
 
   return (
     <React.Fragment>
       <TrainingPicker path={path} />
       <HomeTraining className="climbing-content">
-        <ClimbingTrainingForm />
+        <ClimbingTrainingForm
+          setIsUpdatedFromDatabase={setIsUpdatedFromDatabase}
+        />
         <Section className="routes">
           {isLoading &&
-            routes !== undefined &&
-            Object.keys(routes).map(key => (
+            routes.data !== undefined &&
+            routes.data.map(key => (
               <ClimbingRoute
-                index={key}
-                key={key}
-                routeDetails={routes[key]}
-                user={user}
+                index={key._id}
+                key={key._id}
+                routeDetails={key}
+                setIsUpdatedFromDatabase={setIsUpdatedFromDatabase}
               />
             ))}
         </Section>

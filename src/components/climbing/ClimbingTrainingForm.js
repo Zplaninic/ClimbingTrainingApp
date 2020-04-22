@@ -1,9 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Form, Input, Select } from "../../css/elements/FormInput";
-import { validate } from "../../helper";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../context/auth";
-import { addExerciseToDatabse } from "./../../utils/dataBaseUtils";
+import { validate } from "./../../helper";
 import {
   Button,
   SectionForm,
@@ -11,9 +9,9 @@ import {
   Label,
   Legend
 } from "./../../css/elements/TrainingPages";
-const ClimbingTrainingForm = () => {
-  const Auth = useContext(AuthContext);
+import { addToMongo } from "./../../utils/db";
 
+const ClimbingTrainingForm = props => {
   const [routes, setRoutes] = useState({});
   const [climbingRoute, setClimbingRouteState] = useState({
     date: "",
@@ -34,7 +32,11 @@ const ClimbingTrainingForm = () => {
   const addRouteFromForm = route => {
     setRoutes({ ...routes, [`Route${Date.now()}`]: route });
 
-    addExerciseToDatabse(route, Auth.userID, "climbing", "Route");
+    addToMongo(
+      "http://localhost:8080/api/climbing/route",
+      route,
+      props.setIsUpdatedFromDatabase
+    );
   };
 
   const createRoute = e => {
