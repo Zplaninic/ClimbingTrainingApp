@@ -1,11 +1,19 @@
 import { createGlobalStyle } from "styled-components";
 import { device } from "./device";
-
-//https://jsramblings.com/how-to-use-media-queries-with-styled-components/
+import MontserratRegularWoff from "./../assets/fonts/montserrat-v14-latin-regular.woff";
+import MontserratRegularWoffTwo from "./../assets/fonts/montserrat-v14-latin-regular.woff2";
 
 export const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    src:
+      url('${MontserratRegularWoff}') format('woff2'),
+      url('${MontserratRegularWoffTwo}') format('woff');
+}
+
 html {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -32,19 +40,21 @@ h1,h2,h3 {
   text-align: center;
 }
 
-#wrapper {
+#root {
   margin: 0 auto;
 }
+
 /* Small devices (tablets, 768px and up) */
 @media ${device.mobileL} { 
-  #wrapper {
+  #root {
       width: 97%;
       max-width: 767px;
   }
 }
 
+ /* Big devices (laptop 1024px and up) */
 @media ${device.laptop} { 
-  #wrapper {
+  #root {
     width: 97%;
     max-width: 2560px;
     float: none;

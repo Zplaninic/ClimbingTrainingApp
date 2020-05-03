@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { updateField, deleteField } from "./../../utils/dataBaseUtils";
 import {
   RemoveButton,
   InputData,
   InputNames,
   Exercise
 } from "./../../css/elements/TrainingPages";
+import { deleteFromMongo, updateMongo } from "./../../utils/db";
 
 const ClimbingRoute = props => {
   const { date, name, grade, movements, type, restTime } = props.routeDetails;
@@ -18,7 +18,13 @@ const ClimbingRoute = props => {
       ...props.routeDetails,
       [e.currentTarget.name]: e.currentTarget.value
     };
-    updateField(props.index, updatedRoute, props.user, "climbing");
+
+    updateMongo(
+      "http://localhost:8080/api/climbing/route/",
+      props.index,
+      updatedRoute,
+      props.setIsUpdatedFromDatabase
+    );
   };
 
   return (
@@ -51,7 +57,13 @@ const ClimbingRoute = props => {
         onChange={handleChange}
       />
       <RemoveButton
-        onClick={() => deleteField(props.index, props.user, "climbing")}
+        onClick={() =>
+          deleteFromMongo(
+            "http://localhost:8080/api/climbing/route/",
+            props.index,
+            props.setIsUpdatedFromDatabase
+          )
+        }
       >
         Remove route
       </RemoveButton>
@@ -63,7 +75,7 @@ ClimbingRoute.propTypes = {
   index: PropTypes.string.isRequired,
   routeDetails: PropTypes.shape({
     grade: PropTypes.string.isRequired,
-    movements: PropTypes.string.isRequired,
+    movements: PropTypes.string,
     name: PropTypes.string.isRequired,
     rest: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
@@ -71,4 +83,4 @@ ClimbingRoute.propTypes = {
   })
 };
 
-export default ClimbingRoute;
+export default React.memo(ClimbingRoute);

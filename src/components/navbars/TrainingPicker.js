@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { device } from "./../../css/device";
 
 const TrainingPicker = props => {
-  // console.log(props.path);
   return (
     <div className="menu">
       <NavBarList>
@@ -87,4 +86,4 @@ const List = styled.li`
   }
 `;
 
-export default TrainingPicker;
+export default React.memo(TrainingPicker);

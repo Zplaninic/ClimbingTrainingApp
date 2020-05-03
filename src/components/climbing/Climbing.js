@@ -1,37 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ClimbingTrainingForm from "./ClimbingTrainingForm";
 import ClimbingRoute from "./ClimbingRoute";
 import TrainingPicker from "./../navbars/TrainingPicker";
-import { firebaseConfig } from "./../../firebase";
-import { useDataFromDataBase } from "./../../utils/dataBaseUtils";
 import { HomeTraining, Section } from "./../../css/elements/TrainingPages";
 import PropTypes from "prop-types";
+import useDataApi from "./../hooks/useDataApi";
 
 const Climbing = props => {
-  const [isLoading, setIsLoading] = useState(false);
-  const user = window.sessionStorage.getItem(
-    `firebase:authUser:${firebaseConfig.apiKey}:[DEFAULT]`
-  );
   const path = props.location.pathname;
+  const [isUpdatedFromDatabase, setIsUpdatedFromDatabase] = useState(false);
 
-  const routes = useDataFromDataBase(user, setIsLoading, "climbing");
+  const [{ data, isError }] = useDataApi(
+    "http://localhost:8080/api/climbing/route",
+    isUpdatedFromDatabase
+  );
+
+  useEffect(() => {
+    setIsUpdatedFromDatabase(false);
+  }, [isUpdatedFromDatabase]);
 
   return (
     <React.Fragment>
       <TrainingPicker path={path} />
       <HomeTraining className="climbing-content">
-        <ClimbingTrainingForm />
+        <ClimbingTrainingForm
+          setIsUpdatedFromDatabase={setIsUpdatedFromDatabase}
+        />
+
+        {isError && <div>Something went wrong ...</div>}
+
         <Section className="routes">
-          {isLoading &&
-            routes !== undefined &&
-            Object.keys(routes).map(key => (
+          {!data ? (
+            <div>Loading ...</div>
+          ) : (
+            data.data.map(key => (
               <ClimbingRoute
-                index={key}
-                key={key}
-                routeDetails={routes[key]}
-                user={user}
+                index={key._id}
+                key={key._id}
+                routeDetails={key}
+                setIsUpdatedFromDatabase={setIsUpdatedFromDatabase}
               />
-            ))}
+            ))
+          )}
         </Section>
       </HomeTraining>
     </React.Fragment>
