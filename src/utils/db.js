@@ -1,51 +1,28 @@
-import { useState, useEffect } from "react";
 import axios from "axios";
 
-const user = window.sessionStorage.getItem("login") || "{}";
-let token = JSON.parse(user).token;
-console.log(token);
-token = JSON.parse(user).token !== undefined ? token : (token = "");
-console.log(token);
-
-const options = {
-  headers: {
-    Authorization: `Bearer ${token}`,
-    "Content-Type": "application/json"
+export const deleteFromMongo = async (url, id, setIsReload) => {
+  try {
+    await axios.delete(`${url}${id}`, { withCredentials: true });
+    setIsReload(true);
+  } catch (e) {
+    console.error(e);
   }
 };
 
-export const useDataFromMongo = (
-  url,
-  setIsLoadingHook,
-  isUpdated,
-  setIsReload
-) => {
-  const [routesMongo, setRoutesMongo] = useState();
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get(url, options);
-
-      setRoutesMongo(result.data);
-      setIsLoadingHook(true);
-      setIsReload(false);
-    };
-    fetchData();
-  }, [isUpdated, setIsLoadingHook, setIsReload, url]);
-
-  return routesMongo;
+export const updateMongo = async (url, id, updated, setIsReload) => {
+  try {
+    await axios.put(`${url}${id}`, updated, { withCredentials: true });
+    setIsReload(true);
+  } catch (e) {
+    console.error(e);
+  }
 };
 
-export const deleteFromMongo = (url, id, setIsReload) => {
-  axios.delete(`${url}${id}`, options);
-  setIsReload(true);
-};
-
-export const updateMongo = (url, id, updated, setIsReload) => {
-  axios.put(`${url}${id}`, updated, options);
-  setIsReload(true);
-};
-
-export const addToMongo = (url, item, setIsReload) => {
-  axios.post(url, item, options);
-  setIsReload(true);
+export const addToMongo = async (url, item, setIsReload) => {
+  try {
+    axios.post(url, item, { withCredentials: true });
+    setIsReload(true);
+  } catch (e) {
+    console.error(e);
+  }
 };
