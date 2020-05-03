@@ -1,12 +1,9 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import useCheckUser from "./../hooks/useCheckUser";
 
-const PrivateRoute = ({
-  component: Component,
-  isLoggedIn,
-  isLoading,
-  ...rest
-}) => {
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const [{ isLoggedIn, isLoading }] = useCheckUser();
   if (isLoading || isLoggedIn) {
     return (
       <Route

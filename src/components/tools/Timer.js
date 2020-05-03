@@ -1,7 +1,5 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
-/* eslint-disable class-methods-use-this */
 import React, { Component } from "react";
-import { msToTime } from "../../helper";
+import { msToTime } from "../../utils/helperUtils";
 import Button from "../../css/elements/Button";
 
 class Timer extends Component {
