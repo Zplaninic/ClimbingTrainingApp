@@ -1,7 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { addExerciseToDatabse } from "./../../utils/dataBaseUtils";
-import { AuthContext } from "../../context/auth";
 import { Form, Input } from "../../css/elements/FormInput";
 import {
   Button,
@@ -10,10 +8,9 @@ import {
   Label,
   Legend
 } from "./../../css/elements/TrainingPages";
+import { addToMongo } from "./../../utils/db";
 
-const FingerBoardForm = ({ addSession }) => {
-  const Auth = useContext(AuthContext);
-
+const FingerBoardForm = props => {
   const [fingerBoardExercises, setFingerBoardExercises] = useState({});
   const [fingerBoardExercise, setFingerBoardExercise] = useState({
     date: "",
@@ -36,11 +33,10 @@ const FingerBoardForm = ({ addSession }) => {
       [`Finger${Date.now()}`]: fingerBoardExercise
     });
 
-    addExerciseToDatabse(
+    addToMongo(
+      "http://localhost:8080/api/fingerboard/session",
       fingerBoardExercise,
-      Auth.userID,
-      "fingerboard",
-      "Finger"
+      props.setIsUpdatedFromDatabase
     );
   };
 
@@ -110,4 +106,4 @@ FingerBoardForm.propTypes = {
   addSession: PropTypes.func
 };
 
-export default FingerBoardForm;
+export default React.memo(FingerBoardForm);

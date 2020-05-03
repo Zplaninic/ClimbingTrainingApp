@@ -1,42 +1,45 @@
 /* eslint-disable class-methods-use-this */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FingerboardForm from "./FingerBoardForm";
 import FingerboardExercise from "./FingerboardExercise";
 import TrainingPicker from "./../navbars/TrainingPicker";
-import { firebaseConfig } from "./../../firebase";
-import { useDataFromDataBase } from "./../../utils/dataBaseUtils";
 import { HomeTraining, Section } from "./../../css/elements/TrainingPages";
 import PropTypes from "prop-types";
+import useDataApi from "./../hooks/useDataApi";
 
 const Fingerboard = props => {
   const path = props.location.pathname;
-  const [isLoading, setIsLoading] = useState(false);
-  const user = window.sessionStorage.getItem(
-    `firebase:authUser:${firebaseConfig.apiKey}:[DEFAULT]`
+  const [isUpdatedFromDatabase, setIsUpdatedFromDatabase] = useState(false);
+
+  const [{ data, isError }] = useDataApi(
+    "http://localhost:8080/api/fingerboard/session",
+    isUpdatedFromDatabase
   );
 
-  const fingerExercises = useDataFromDataBase(
-    user,
-    setIsLoading,
-    "fingerboard"
-  );
+  useEffect(() => {
+    setIsUpdatedFromDatabase(false);
+  }, [isUpdatedFromDatabase]);
 
   return (
     <React.Fragment>
       <TrainingPicker path={path} />
       <HomeTraining className="fingerboard-traning">
-        <FingerboardForm />
+        <FingerboardForm setIsUpdatedFromDatabase={setIsUpdatedFromDatabase} />
+
+        {isError && <div>Something went wrong ...</div>}
         <Section className="fingerExercises">
-          {isLoading &&
-            fingerExercises !== undefined &&
-            Object.keys(fingerExercises).map(key => (
+          {!data ? (
+            <div>Loading ...</div>
+          ) : (
+            data.data.map(key => (
               <FingerboardExercise
-                index={key}
-                key={key}
-                fingerDetails={fingerExercises[key]}
-                user={user}
+                index={key._id}
+                key={key._id}
+                fingerDetails={key}
+                setIsUpdatedFromDatabase={setIsUpdatedFromDatabase}
               />
-            ))}
+            ))
+          )}
         </Section>
       </HomeTraining>
     </React.Fragment>

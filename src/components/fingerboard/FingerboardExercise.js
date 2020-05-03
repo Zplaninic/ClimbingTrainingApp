@@ -1,5 +1,4 @@
 import React from "react";
-import { updateField, deleteField } from "./../../utils/dataBaseUtils";
 import {
   RemoveButton,
   InputData,
@@ -7,6 +6,7 @@ import {
   Exercise
 } from "./../../css/elements/TrainingPages";
 import PropTypes from "prop-types";
+import { updateMongo, deleteFromMongo } from "./../../utils/db";
 
 const FingerboardExercise = props => {
   const {
@@ -24,7 +24,13 @@ const FingerboardExercise = props => {
       ...props.fingerDetails,
       [e.currentTarget.name]: e.currentTarget.value
     };
-    updateField(props.index, updatedExercise, props.user, "fingerboard");
+
+    updateMongo(
+      "http://localhost:8080/api/fingerboard/session/",
+      props.index,
+      updatedExercise,
+      props.setIsUpdatedFromDatabase
+    );
   };
 
   return (
@@ -60,7 +66,13 @@ const FingerboardExercise = props => {
         onChange={handleChange}
       />
       <RemoveButton
-        onClick={() => deleteField(props.index, props.user, "fingerboard")}
+        onClick={() =>
+          deleteFromMongo(
+            "http://localhost:8080/api/fingerboard/session/",
+            props.index,
+            props.setIsUpdatedFromDatabase
+          )
+        }
       >
         Remove route
       </RemoveButton>
@@ -79,4 +91,4 @@ FingerboardExercise.propTypes = {
   })
 };
 
-export default FingerboardExercise;
+export default React.memo(FingerboardExercise);
