@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { updateField, deleteField } from "./../../utils/dataBaseUtils";
+import { deleteFromMongo, updateMongo } from "./../../utils/db";
 import {
   RemoveButton,
   InputData,
@@ -9,7 +9,6 @@ import {
 } from "./../../css/elements/TrainingPages";
 
 const StrengthExercise = props => {
-  console.log(props);
   const { date, muscles, type, sets, reps, rest } = props.exerciseDetails;
 
   const handleChange = e => {
@@ -18,7 +17,12 @@ const StrengthExercise = props => {
       [e.currentTarget.name]: e.currentTarget.value
     };
 
-    updateField(props.index, updatedExercise, props.user, "strength");
+    updateMongo(
+      "http://localhost:8080/api/strength/exercise/",
+      props.index,
+      updatedExercise,
+      props.setIsUpdatedFromDatabase
+    );
   };
 
   return (
@@ -41,7 +45,13 @@ const StrengthExercise = props => {
       <InputNames>Rest(s)</InputNames>
       <InputData type="text" name="rest" onChange={handleChange} value={rest} />
       <RemoveButton
-        onClick={() => deleteField(props.index, props.user, "strength")}
+        onClick={() =>
+          deleteFromMongo(
+            "http://localhost:8080/api/strength/exercise/",
+            props.index,
+            props.setIsUpdatedFromDatabase
+          )
+        }
       >
         Remove exercise
       </RemoveButton>
@@ -54,11 +64,11 @@ StrengthExercise.propTypes = {
     date: PropTypes.string,
     muscles: PropTypes.string,
     type: PropTypes.string,
-    sets: PropTypes.string,
-    reps: PropTypes.string,
-    rest: PropTypes.string
+    sets: PropTypes.number,
+    reps: PropTypes.number,
+    rest: PropTypes.number
   }),
   index: PropTypes.string
 };
 
-export default StrengthExercise;
+export default React.memo(StrengthExercise);

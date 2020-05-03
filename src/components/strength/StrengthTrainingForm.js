@@ -1,9 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Form, Input, Select } from "../../css/elements/FormInput";
-import { validate } from "../../helper";
+import { validate } from "../../utils/helperUtils";
 import PropTypes from "prop-types";
-import { addExerciseToDatabse } from "./../../utils/dataBaseUtils";
-import { AuthContext } from "../../context/auth";
 import {
   Button,
   SectionForm,
@@ -11,18 +9,17 @@ import {
   Label,
   Legend
 } from "./../../css/elements/TrainingPages";
+import { addToMongo } from "./../../utils/db";
 
-const StrengthTrainingForm = ({ addExercise }) => {
-  const Auth = useContext(AuthContext);
-
+const StrengthTrainingForm = props => {
   const [strengthExercises, setStrenghtExercises] = useState({});
   const [strengthExercise, setStrenghtExercise] = useState({
     date: "",
     muscles: "antagonist",
     type: "",
-    sets: "",
-    reps: "",
-    rest: ""
+    sets: 0,
+    reps: 0,
+    rest: 0
   });
 
   const updateStrengthExercise = e => {
@@ -38,7 +35,11 @@ const StrengthTrainingForm = ({ addExercise }) => {
       [`Route${Date.now()}`]: strengthExercise
     });
 
-    addExerciseToDatabse(strengthExercise, Auth.userID, "strength", "Strength");
+    addToMongo(
+      "http://localhost:8080/api/strength/exercise",
+      strengthExercise,
+      props.setIsUpdatedFromDatabase
+    );
   };
 
   const createExercise = e => {
@@ -54,9 +55,9 @@ const StrengthTrainingForm = ({ addExercise }) => {
       date: "",
       muscles: "antagonist",
       type: "",
-      sets: "",
-      reps: "",
-      rest: ""
+      sets: 0,
+      reps: 0,
+      rest: 0
     });
   };
 
@@ -128,4 +129,4 @@ StrengthTrainingForm.propTypes = {
   addRoute: PropTypes.func
 };
 
-export default StrengthTrainingForm;
+export default React.memo(StrengthTrainingForm);
