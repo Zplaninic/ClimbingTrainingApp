@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input, Select } from "../../css/elements/FormInput";
 import PropTypes from "prop-types";
-import { validate } from "./../../helper";
+import { validate } from "./../../utils/helperUtils";
 import {
   Button,
   SectionForm,
@@ -122,4 +122,4 @@ ClimbingTrainingForm.propTypes = {
   addRoute: PropTypes.func
 };
 
-export default ClimbingTrainingForm;
+export default React.memo(ClimbingTrainingForm);

@@ -83,4 +83,4 @@ ClimbingRoute.propTypes = {
   })
 };
 
-export default ClimbingRoute;
+export default React.memo(ClimbingRoute);

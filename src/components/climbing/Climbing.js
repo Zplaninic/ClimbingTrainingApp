@@ -1,22 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ClimbingTrainingForm from "./ClimbingTrainingForm";
 import ClimbingRoute from "./ClimbingRoute";
 import TrainingPicker from "./../navbars/TrainingPicker";
 import { HomeTraining, Section } from "./../../css/elements/TrainingPages";
-import { useDataFromMongo } from "./../../utils/db";
 import PropTypes from "prop-types";
+import useDataApi from "./../hooks/useDataApi";
 
 const Climbing = props => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isUpdatedFromDatase, setIsUpdatedFromDatabase] = useState(false);
   const path = props.location.pathname;
+  const [isUpdatedFromDatabase, setIsUpdatedFromDatabase] = useState(false);
 
-  const routes = useDataFromMongo(
+  const [{ data, isError }] = useDataApi(
     "http://localhost:8080/api/climbing/route",
-    setIsLoading,
-    isUpdatedFromDatase,
-    setIsUpdatedFromDatabase
+    isUpdatedFromDatabase
   );
+
+  useEffect(() => {
+    setIsUpdatedFromDatabase(false);
+  }, [isUpdatedFromDatabase]);
 
   return (
     <React.Fragment>
@@ -25,17 +26,22 @@ const Climbing = props => {
         <ClimbingTrainingForm
           setIsUpdatedFromDatabase={setIsUpdatedFromDatabase}
         />
+
+        {isError && <div>Something went wrong ...</div>}
+
         <Section className="routes">
-          {isLoading &&
-            routes.data !== undefined &&
-            routes.data.map(key => (
+          {!data ? (
+            <div>Loading ...</div>
+          ) : (
+            data.data.map(key => (
               <ClimbingRoute
                 index={key._id}
                 key={key._id}
                 routeDetails={key}
                 setIsUpdatedFromDatabase={setIsUpdatedFromDatabase}
               />
-            ))}
+            ))
+          )}
         </Section>
       </HomeTraining>
     </React.Fragment>
