@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Card,
@@ -7,7 +7,6 @@ import {
   Button,
   SocialButtonImage
 } from "./../../css/elements/AuthForm";
-import { AuthContext } from "./../../context/auth";
 import PropTypes from "prop-types";
 import axios from "axios";
 
@@ -16,17 +15,16 @@ const Login = ({ history }) => {
   const [password, setPassword] = useState("");
   const [error, setErrors] = useState("");
 
-  const Auth = useContext(AuthContext);
-
   const handleForm = e => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:8080/signin", { email, password })
+      .post(
+        "http://localhost:8080/api/signin",
+        { email, password },
+        { withCredentials: true }
+      )
       .then(function(res) {
-        sessionStorage.setItem("login", JSON.stringify(res.data));
-        Auth.setLoggedIn(true);
-        Auth.setIsLoading(false);
         history.push("/");
       })
       .catch(function(e) {

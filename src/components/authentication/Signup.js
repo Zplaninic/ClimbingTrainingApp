@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Card,
@@ -8,7 +8,6 @@ import {
   SocialButtonImage
 } from "./../../css/elements/AuthForm";
 import { validateAuthentication } from "./../../utils/validationUtils";
-import { AuthContext } from "./../../context/auth";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import axios from "axios";
@@ -23,8 +22,6 @@ const Signup = ({ history }) => {
   const [isPasswordConfirmed, setIsPasswordConfirmed] = useState(true);
   const [error, setErrors] = useState("");
 
-  const Auth = useContext(AuthContext);
-
   const handleForm = e => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -33,12 +30,12 @@ const Signup = ({ history }) => {
       setConfirmPassword("");
     } else {
       axios
-        .post("http://localhost:8080/signup", { email, password })
+        .post(
+          "http://localhost:8080/api/signup",
+          { email, password },
+          { withCredentials: true }
+        )
         .then(function(res) {
-          console.log("signup", res.data);
-          sessionStorage.setItem("login", JSON.stringify(res.data));
-          Auth.setLoggedIn(true);
-          Auth.setIsLoading(false);
           history.push("/");
         })
         .catch(function(e) {
