@@ -33,7 +33,7 @@ const ClimbingTrainingForm = props => {
     setRoutes({ ...routes, [`Route${Date.now()}`]: route });
 
     addToMongo(
-      "http://localhost:8080/api/climbing/route",
+      `${process.env.REACT_APP_API_URL}/climbing/route`,
       route,
       props.setIsUpdatedFromDatabase
     );

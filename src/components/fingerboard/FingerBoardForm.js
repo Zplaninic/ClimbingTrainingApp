@@ -34,7 +34,7 @@ const FingerBoardForm = props => {
     });
 
     addToMongo(
-      "http://localhost:8080/api/fingerboard/session",
+      `${process.env.REACT_APP_API_URL}/fingerboard/session`,
       fingerBoardExercise,
       props.setIsUpdatedFromDatabase
     );

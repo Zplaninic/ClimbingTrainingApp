@@ -8,7 +8,7 @@ const useCheckUser = () => {
   useEffect(() => {
     const checkUser = async () => {
       try {
-        await axios.get("http://localhost:8080/api/checkToken", {
+        await axios.get(`${process.env.REACT_APP_API_URL}/checkToken`, {
           withCredentials: true
         });
         setIsLoggedIn(true);

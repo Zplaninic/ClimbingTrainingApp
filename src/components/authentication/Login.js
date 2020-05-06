@@ -20,7 +20,7 @@ const Login = ({ history }) => {
 
     axios
       .post(
-        "http://localhost:8080/api/signin",
+        `${process.env.REACT_APP_API_URL}/signin`,
         { email, password },
         { withCredentials: true }
       )

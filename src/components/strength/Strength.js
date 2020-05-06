@@ -11,11 +11,9 @@ const Strength = props => {
   const [isUpdatedFromDatabase, setIsUpdatedFromDatabase] = useState(false);
 
   const [{ data, isError }] = useDataApi(
-    "http://localhost:8080/api/strength/exercise",
+    `${process.env.REACT_APP_API_URL}/strength/exercise`,
     isUpdatedFromDatabase
   );
-
-  console.log(data);
 
   useEffect(() => {
     setIsUpdatedFromDatabase(false);

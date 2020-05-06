@@ -18,7 +18,7 @@ const StrengthExercise = props => {
     };
 
     updateMongo(
-      "http://localhost:8080/api/strength/exercise/",
+      `${process.env.REACT_APP_API_URL}/strength/exercise/`,
       props.index,
       updatedExercise,
       props.setIsUpdatedFromDatabase
@@ -47,7 +47,7 @@ const StrengthExercise = props => {
       <RemoveButton
         onClick={() =>
           deleteFromMongo(
-            "http://localhost:8080/api/strength/exercise/",
+            `${process.env.REACT_APP_API_URL}/strength/exercise/`,
             props.index,
             props.setIsUpdatedFromDatabase
           )

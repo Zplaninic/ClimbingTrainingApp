@@ -36,7 +36,7 @@ const StrengthTrainingForm = props => {
     });
 
     addToMongo(
-      "http://localhost:8080/api/strength/exercise",
+      `${process.env.REACT_APP_API_URL}/strength/exercise`,
       strengthExercise,
       props.setIsUpdatedFromDatabase
     );

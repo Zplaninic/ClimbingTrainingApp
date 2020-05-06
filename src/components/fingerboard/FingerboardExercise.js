@@ -26,7 +26,7 @@ const FingerboardExercise = props => {
     };
 
     updateMongo(
-      "http://localhost:8080/api/fingerboard/session/",
+      `${process.env.REACT_APP_API_URL}/fingerboard/session/`,
       props.index,
       updatedExercise,
       props.setIsUpdatedFromDatabase
@@ -68,7 +68,7 @@ const FingerboardExercise = props => {
       <RemoveButton
         onClick={() =>
           deleteFromMongo(
-            "http://localhost:8080/api/fingerboard/session/",
+            `${process.env.REACT_APP_API_URL}/fingerboard/session/`,
             props.index,
             props.setIsUpdatedFromDatabase
           )
