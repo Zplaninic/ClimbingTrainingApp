@@ -11,7 +11,7 @@ const Climbing = props => {
   const [isUpdatedFromDatabase, setIsUpdatedFromDatabase] = useState(false);
 
   const [{ data, isError }] = useDataApi(
-    "http://localhost:8080/api/climbing/route",
+    `${process.env.REACT_APP_API_URL}/climbing/route`,
     isUpdatedFromDatabase
   );
 

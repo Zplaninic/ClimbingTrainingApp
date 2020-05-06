@@ -14,7 +14,6 @@ const useDataApi = (initialUrl, isUpdatedFromDatabase) => {
       try {
         const result = await axios.get(url, { withCredentials: true });
         setData(result.data);
-        console.log("DataApiUpdated", isUpdatedFromDatabase);
         // setIsUpdatedFromDatabase(false);
       } catch (e) {
         setIsError(true);

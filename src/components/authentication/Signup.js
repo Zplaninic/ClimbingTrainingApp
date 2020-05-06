@@ -31,7 +31,7 @@ const Signup = ({ history }) => {
     } else {
       axios
         .post(
-          "http://localhost:8080/api/signup",
+          `${process.env.REACT_APP_API_URL}/signup`,
           { email, password },
           { withCredentials: true }
         )

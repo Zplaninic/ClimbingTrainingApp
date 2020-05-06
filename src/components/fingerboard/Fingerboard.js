@@ -12,7 +12,7 @@ const Fingerboard = props => {
   const [isUpdatedFromDatabase, setIsUpdatedFromDatabase] = useState(false);
 
   const [{ data, isError }] = useDataApi(
-    "http://localhost:8080/api/fingerboard/session",
+    `${process.env.REACT_APP_API_URL}/fingerboard/session`,
     isUpdatedFromDatabase
   );
 

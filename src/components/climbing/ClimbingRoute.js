@@ -20,7 +20,7 @@ const ClimbingRoute = props => {
     };
 
     updateMongo(
-      "http://localhost:8080/api/climbing/route/",
+      `${process.env.REACT_APP_API_URL}/climbing/route/`,
       props.index,
       updatedRoute,
       props.setIsUpdatedFromDatabase
@@ -59,7 +59,7 @@ const ClimbingRoute = props => {
       <RemoveButton
         onClick={() =>
           deleteFromMongo(
-            "http://localhost:8080/api/climbing/route/",
+            `${process.env.REACT_APP_API_URL}/climbing/route/`,
             props.index,
             props.setIsUpdatedFromDatabase
           )
