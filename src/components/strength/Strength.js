@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from "react";
 import StrengthTrainingForm from "./StrengthTrainingForm";
-import StrengthExercise from "./StrengthExercise";
 import TrainingPicker from "./../navbars/TrainingPicker";
-import { HomeTraining, Section } from "./../../css/elements/TrainingPages";
 import PropTypes from "prop-types";
-import useDataApi from "./../hooks/useDataApi";
+import styled from "styled-components";
+import Countdown from "./../tools/Countdown";
+import StrengthTable from "./StrengthTable";
 
 const Strength = props => {
   const path = props.location.pathname;
   const [isUpdatedFromDatabase, setIsUpdatedFromDatabase] = useState(false);
-
-  const [{ data, isError }] = useDataApi(
-    `${process.env.REACT_APP_API_URL}/strength/exercise`,
-    isUpdatedFromDatabase
-  );
 
   useEffect(() => {
     setIsUpdatedFromDatabase(false);
@@ -22,30 +17,52 @@ const Strength = props => {
   return (
     <React.Fragment>
       <TrainingPicker path={path} />
-      <HomeTraining className="strength-training">
-        <StrengthTrainingForm
-          setIsUpdatedFromDatabase={setIsUpdatedFromDatabase}
-        />
+      <TrainingContainer className="container">
+        <TrainingContent className="strength-training">
+          <StrengthTrainingForm
+            setIsUpdatedFromDatabase={setIsUpdatedFromDatabase}
+          />
+          <TimerContainer>
+            <Countdown />
+          </TimerContainer>
 
-        {isError && <div>Something went wrong ...</div>}
-        <Section className="exercises">
-          {!data ? (
-            <div>Loading ...</div>
-          ) : (
-            data.data.map(key => (
-              <StrengthExercise
-                index={key._id}
-                key={key._id}
-                exerciseDetails={key}
-                setIsUpdatedFromDatabase={setIsUpdatedFromDatabase}
-              />
-            ))
-          )}
-        </Section>
-      </HomeTraining>
+          <TableTraining className="exercises">
+            <StrengthTable
+              isUpdatedFromDatabase={isUpdatedFromDatabase}
+              setIsUpdatedFromDatabase={setIsUpdatedFromDatabase}
+            ></StrengthTable>
+          </TableTraining>
+        </TrainingContent>
+      </TrainingContainer>
     </React.Fragment>
   );
 };
+
+const TableTraining = styled.div`
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 2;
+  grid-column-end: 4;
+  padding: 20px 20px 20px 0px;
+`;
+
+const TrainingContainer = styled.div`
+  margin-top: 50px;
+`;
+
+const TimerContainer = styled.div`
+  grid-column-start: 3;
+  grid-column-end: 6;
+  padding: 20px;
+`;
+
+const TrainingContent = styled.div`
+  padding-bottom: 2.5rem;
+  display: grid;
+  grid-template-columns: 200px 1fr 0.5fr 0.25fr 0.25fr;
+  grid-template-rows: 450px auto 30px;
+  grid-gap: 2em;
+`;
 
 Strength.propTypes = {
   match: PropTypes.object,
