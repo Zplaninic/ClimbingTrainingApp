@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import { msToTime } from "../../utils/helperUtils";
 import Button from "../../css/elements/Button";
 
+const divStyle = {
+  backgroundColor: "purple",
+  height: "100%"
+};
+
 class Timer extends Component {
   state = {
     time: 0,
@@ -49,7 +54,7 @@ class Timer extends Component {
       ) : null;
 
     return (
-      <div className="timeR">
+      <div className="timeR" style={divStyle}>
         <h3>Time: {msToTime(time)}</h3>
         {start}
         {resume}
