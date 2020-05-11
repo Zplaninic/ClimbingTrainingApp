@@ -14,6 +14,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-top: 150px;
 `;
 
 const Input = styled.input`
@@ -26,7 +27,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  background: #3f85cd;
+  background: #16acac;
   border-color: #3f4eae;
   border-radius: 3px;
   padding: 1rem;
