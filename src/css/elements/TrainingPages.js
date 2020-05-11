@@ -61,14 +61,17 @@ export const Exercise = styled.div`
 `;
 
 export const Button = styled.button`
-  background-color: #106ba3;
+  background-color: #00acac;
+  border-color: #00acac;
   border: solid 1px transparent;
   border-radius: 4px;
   padding: 10px 20px;
-  color: #ffffff;
-  font-size: 16px;
-  margin: 0 5px;
+  color: #fff;
+  font-size: 0.75rem;
   cursor: pointer;
+  margin: 5px;
+  line-height: 1.5;
+  outline: none;
 `;
 
 export const SectionForm = styled.section`
@@ -76,15 +79,26 @@ export const SectionForm = styled.section`
 `;
 
 export const Fieldset = styled.fieldset`
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  height: 100%;
   border: none;
-  display: block;
 `;
 
 export const Label = styled.label`
-  font-size: 0.8em;
+  padding: 15px;
+  color: #4e5c68;
+  align-items: center;
+  width: 30%;
+  font-size: 13px;
+  display: flex;
+  border-right: 1px solid #e4e7ea;
+
+  /* font-size: 0.8em;
   padding-left: 5px;
   font-weight: bold;
-  color: #b41869;
+  color: #b41869; */
 `;
 
 export const Legend = styled.legend`

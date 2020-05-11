@@ -10,16 +10,15 @@ import Analysis from "./analysis/Analysis";
 import Admin from "./private/Admin";
 import Login from "./authentication/Login";
 import Signup from "./authentication/Signup";
-import Header from "./../components/basic/Header";
+import Top from "./basic/Top";
 import { GlobalStyle } from "./../css/style";
-import Footer from "./../components/basic/Footer";
 
 const App = () => {
   return (
     <Router>
       <React.Fragment>
         <GlobalStyle></GlobalStyle>
-        <Header></Header>
+        <Top />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
@@ -31,7 +30,6 @@ const App = () => {
           <PrivateRoute exact path="/admin" component={Admin} />
           <Route path="/*" component={NotFound} />
         </Switch>
-        <Footer></Footer>
       </React.Fragment>
     </Router>
   );

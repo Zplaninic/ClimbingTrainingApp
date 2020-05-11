@@ -105,8 +105,9 @@ const Signup = ({ history }) => {
 };
 
 const ErrorTag = styled.p`
+  text-align: center;
   margin: 10px;
-  color: #c8331b;
+  color: #ff5b57;
 `;
 Signup.propTypes = {
   history: PropTypes.object

@@ -71,35 +71,13 @@ class Countdown extends Component {
     }
   };
 
-  adjustSets = input => {
-    const { setsTime, timerOn } = this.state;
-    const max = 100;
-    if (!timerOn) {
-      if (input === "incSets" && setsTime < max) {
-        this.setState({ setsTime: setsTime + 1 });
-      } else if (input === "decSets" && setsTime - 1 >= 0) {
-        this.setState({ setsTime: setsTime - 1 });
-      }
-    }
-  };
-
   render() {
-    const { timerOn, timerStart, timerTime, setsTime } = this.state;
+    const { timerOn, timerStart, timerTime } = this.state;
     let seconds = ("0" + (Math.floor((timerTime / 1000) % 60) % 60)).slice(-2);
     let minutes = ("0" + Math.floor((timerTime / 60000) % 60)).slice(-2);
 
     return (
       <div className="Countdown">
-        <div className="Countdown-header">Sets</div>
-        <div className="Countdown-header">Number of Sets</div>
-        <div className="Countdown-display">
-          <Button onClick={() => this.adjustSets("incSets")}>&#8679;</Button>
-
-          <div className="Countdown-time">{setsTime}</div>
-
-          <Button onClick={() => this.adjustSets("decSets")}>&#8681;</Button>
-        </div>
-
         <div className="Countdown-header">Work Interval</div>
         <div className="Countdown-label">Minutes : Seconds</div>
         <div className="Countdown-display">
@@ -121,15 +99,12 @@ class Countdown extends Component {
             &#8681;
           </Button>
         </div>
-
         {timerOn === false && timerStart === 0 && (
           <Button onClick={this.startTimer}>Start</Button>
         )}
-
         {timerOn === true && timerTime >= 1000 && (
           <Button onClick={this.stopTimer}>Stop</Button>
         )}
-
         {timerOn === false &&
           timerStart !== 0 &&
           timerStart !== timerTime &&
@@ -138,7 +113,6 @@ class Countdown extends Component {
               <Button onClick={this.startTimer}>Resume</Button>
             </b>
           )}
-
         {/* {(timerOn === false || timerTime < 1000) &&
 					(timerStart !== timerTime && timerStart > 0) && (
 						<button onClick={this.resetTimer}>Reset</button>

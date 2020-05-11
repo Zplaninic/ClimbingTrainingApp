@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
 export default styled.button`
-  background-color: #aabfe1;
+  background-color: #16acac;
   border: solid 1px transparent;
   border-radius: 4px;
-  padding: 10px 20px;
+  padding: 10px 19px;
   color: #ffffff;
   font-size: 16px;
   margin: 0 5px;
   cursor: pointer;
   &:hover {
-    background-color: #106ba3;
+    background-color: #2c6eab;
   }
 `;
