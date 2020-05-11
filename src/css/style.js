@@ -28,7 +28,7 @@ html {
 
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #F1DFCD;
+  background-color: #d9e0e7;
   margin: 0px;
   padding: 0px;
 }
@@ -45,19 +45,21 @@ h1,h2,h3 {
 }
 
 /* Small devices (tablets, 768px and up) */
-@media ${device.mobileL} { 
+/* @media ${device.mobileL} { 
   #root {
       width: 97%;
       max-width: 767px;
   }
-}
+} */
 
  /* Big devices (laptop 1024px and up) */
 @media ${device.laptop} { 
   #root {
-    width: 97%;
+    width: auto!important;
+    overflow-x: hidden!important;
     max-width: 2560px;
     float: none;
+    margin: 0px;
   }
 }
 `;
