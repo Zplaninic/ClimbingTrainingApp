@@ -32,7 +32,7 @@ const FingerboardExercise = props => {
     <TableRow className="fingerBoardExercise">
       <TableCell>
         <CellInput
-          type="date"
+          type="text"
           name="date"
           value={date}
           onChange={handleChange}

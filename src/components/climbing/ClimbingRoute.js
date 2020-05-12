@@ -4,7 +4,7 @@ import { deleteFromMongo, updateMongo } from "./../../utils/db";
 import styled from "styled-components";
 
 const ClimbingRoute = props => {
-  const { date, name, grade, movements, type, restTime } = props.routeDetails;
+  const { date, name, grade, movements, type, rest } = props.routeDetails;
 
   const handleChange = e => {
     e.preventDefault();
@@ -68,7 +68,7 @@ const ClimbingRoute = props => {
         <CellInput
           type="text"
           name="restTime"
-          value={restTime}
+          value={rest}
           onChange={handleChange}
         />
       </TableCell>

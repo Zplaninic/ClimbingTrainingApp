@@ -39,7 +39,7 @@ const StrengthExercise = props => {
         />
       </TableCell>
       <TableCell>
-        <TableCell
+        <CellInput
           type="text"
           name="type"
           onChange={handleChange}
@@ -47,7 +47,7 @@ const StrengthExercise = props => {
         />
       </TableCell>
       <TableCell>
-        <TableCell
+        <CellInput
           type="text"
           name="sets"
           onChange={handleChange}
@@ -55,7 +55,7 @@ const StrengthExercise = props => {
         />
       </TableCell>
       <TableCell>
-        <TableCell
+        <CellInput
           type="text"
           name="reps"
           onChange={handleChange}
@@ -63,7 +63,7 @@ const StrengthExercise = props => {
         />
       </TableCell>
       <TableCell>
-        <TableCell
+        <CellInput
           type="text"
           name="rest"
           onChange={handleChange}
