@@ -31,6 +31,7 @@ body {
   background-color: #d9e0e7;
   margin: 0px;
   padding: 0px;
+  width: 100%;
 }
 
 h1,h2,h3 {
