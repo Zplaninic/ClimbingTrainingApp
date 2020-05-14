@@ -5,6 +5,7 @@ import { validate } from "./../../utils/helperUtils";
 import { Button, Label } from "./../../css/elements/TrainingPages";
 import { addToMongo } from "./../../utils/db";
 import styled from "styled-components";
+import { device } from "./../../css/device";
 
 const ClimbingTrainingForm = props => {
   const [routes, setRoutes] = useState({});
@@ -187,14 +188,19 @@ const Legend = styled.legend`
   font-size: 14px;
 `;
 const SectionForm = styled.div`
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 2;
   height: 100%;
   width: 100%;
-  padding: 20px;
-  padding-left: 0px;
+  padding: 10px;
+  order: 2;
+
+  @media ${device.laptop} {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    padding: 20px;
+    padding-left: 0px;
+  }
 `;
 
 ClimbingTrainingForm.propTypes = {

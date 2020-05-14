@@ -3,6 +3,7 @@ import styled from "styled-components";
 import useDataApi from "./../hooks/useDataApi";
 import FingerboardExercise from "./FingerboardExercise";
 import HeaderTable from "./../basic/HeaderTable";
+import { device } from "./../../css/device";
 
 const FingerboardTable = props => {
   const [{ data, isError }] = useDataApi(
@@ -12,7 +13,7 @@ const FingerboardTable = props => {
   const sessions = data?.data;
 
   return (
-    <div>
+    <MainTableContainer>
       {!sessions ? (
         <div>Loading</div>
       ) : (
@@ -44,9 +45,17 @@ const FingerboardTable = props => {
           )}
         </TableContainer>
       )}
-    </div>
+    </MainTableContainer>
   );
 };
+
+const MainTableContainer = styled.div`
+  margin: 10px;
+
+  @media ${device.laptop} {
+    margin: 10px;
+  }
+`;
 
 const TableContainer = styled.div`
   width: 100%;

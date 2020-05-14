@@ -3,6 +3,7 @@ import styled from "styled-components";
 import useDataApi from "./../hooks/useDataApi";
 import ClimbingRoute from "./ClimbingRoute";
 import HeaderTable from "./../basic/HeaderTable";
+import { device } from "./../../css/device";
 
 const ClimbingTable = props => {
   const [{ data, isError }] = useDataApi(
@@ -12,7 +13,7 @@ const ClimbingTable = props => {
   const routes = data?.data;
 
   return (
-    <div>
+    <MainTableContainer>
       {!routes ? (
         <div>Loading</div>
       ) : (
@@ -45,9 +46,17 @@ const ClimbingTable = props => {
           )}
         </TableContainer>
       )}
-    </div>
+    </MainTableContainer>
   );
 };
+
+const MainTableContainer = styled.div`
+  margin: 10px;
+
+  @media ${device.laptop} {
+    margin: 10px;
+  }
+`;
 
 const TableContainer = styled.div`
   width: 100%;

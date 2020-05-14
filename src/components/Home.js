@@ -1,37 +1,35 @@
 import React from "react";
 import TrainingPicker from "./navbars/TrainingPicker";
 import styled from "styled-components";
+import { device } from "./../css/device";
 
-const Home = props => {
-  const path = props.location.pathname;
+const Home = ({ location, open, setOpen, node }) => {
+  const path = location.pathname;
   return (
     <React.Fragment>
-      <TrainingPicker path={path} />
+      <TrainingPicker path={path} open={open} setOpen={setOpen} />
       <HomeGrid className="home">
-        <ContentHome>
-          <h4>HOME PART</h4>
+        <ContentHome ref={node}>
+          <p>Welcome to the web app ClimbThe.best</p>
           <p>
-            Here we will have training picker in different styles then navbar in
-            climbing, other component
-          </p>
-          <p>Here will be button to analysis part</p>
-          <p>here will be climbing news from some api</p>
-          <p>8a.nu news</p>
-          <p>
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor{" "}
+            The idea behind this project is to systematically track your
+            climbing tranining
           </p>
           <p>
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor{" "}
+            Training is separated in three separate components: strength
+            exercises, fingerboard sessons and climbing routes
           </p>
           <p>
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor{" "}
+            Later will come the analysis part with interesting charts regarding
+            your progression
           </p>
           <p>
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor
+            For the moment you can login with any email you have, can be real or
+            some fake one, we promise that we won't sent any spam emails
+          </p>
+          <p>
+            This project is still in very beginning and probably there are some
+            bugs, also some new design will come in near future
           </p>
         </ContentHome>
       </HomeGrid>
@@ -40,14 +38,25 @@ const Home = props => {
 };
 
 const ContentHome = styled.div`
-  grid-column-start: 2;
-  grid-column-end: 3;
+  @media ${device.laptop} {
+    grid-column-start: 2;
+    grid-column-end: 3;
+  }
+
+  p {
+    margin: 20px;
+  }
 `;
 const HomeGrid = styled.div`
   margin-top: 50px;
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  grid-gap: 2em;
+  display: flex;
+  flex-direction: column;
+
+  @media ${device.laptop} {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-gap: 2em;
+  }
 `;
 
 export default Home;

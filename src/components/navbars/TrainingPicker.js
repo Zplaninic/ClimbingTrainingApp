@@ -4,36 +4,52 @@ import styled from "styled-components";
 import { device } from "./../../css/device";
 import NavImage from "./../basic/NavImage";
 
-const TrainingPicker = props => {
+const TrainingPicker = ({ path, open, setOpen }) => {
   return (
-    <Nav className="menu">
+    <Nav className="menu" open={open}>
       <NavBarList>
         <NavImage></NavImage>
         <List>
-          <StyledLink className="home" path={props.path} to="/">
+          <StyledLink
+            className="home"
+            path={path}
+            to="/"
+            onClick={() => setOpen(false)}
+          >
             Home
           </StyledLink>
         </List>
         <List>
-          <StyledLink className="climbing" path={props.path} to="/climbing">
+          <StyledLink
+            className="climbing"
+            path={path}
+            to="/climbing"
+            onClick={() => setOpen(false)}
+          >
             Climbing
           </StyledLink>
         </List>
         <List>
-          <StyledLink className="strength" path={props.path} to="/strength">
+          <StyledLink
+            className="strength"
+            path={path}
+            to="/strength"
+            onClick={() => setOpen(false)}
+          >
             Strength
           </StyledLink>
         </List>
         <List>
           <StyledLink
             className="fingerboard"
-            path={props.path}
+            path={path}
             to="/fingerboard"
+            onClick={() => setOpen(false)}
           >
             Fingerboard
           </StyledLink>
         </List>
-        <List>
+        {/* <List>
           <StyledLink to="/">Analysis (coming...)</StyledLink>
         </List>
         <List>
@@ -44,7 +60,7 @@ const TrainingPicker = props => {
         </List>
         <List>
           <StyledLink to="/">Test (coming...)</StyledLink>
-        </List>
+        </List> */}
       </NavBarList>
     </Nav>
   );
@@ -57,13 +73,18 @@ const Nav = styled.nav`
   position: fixed !important;
   height: 100%;
   background-color: #2d353c;
+  transition: transform 0.3s ease-in-out;
+  transform: ${({ open }) => (open ? "translateX(0)" : "translateX(-100%)")};
+
+  @media ${device.laptop} {
+    transform: translateX(0);
+  }
 `;
 
 const NavBarList = styled.ul`
   list-style-type: none;
   padding: 0;
   margin: 0;
-  /* border-bottom: 3px solid #cc8850; */
   overflow: auto;
 `;
 
