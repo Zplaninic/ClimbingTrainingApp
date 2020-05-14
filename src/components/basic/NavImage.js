@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import logo from "./../../assets/images/climbTheBestLogo.png";
+import { device } from "./../../css/device";
 
 const NavImage = () => (
   <ImageContainer>
@@ -11,8 +12,12 @@ const NavImage = () => (
 const ImageContainer = styled.div`
   width: 200px;
   height: 90px;
-  margin-top: 50px;
+  /* margin-top: 30px; */
   text-align: center;
+
+  @media ${device.laptop} {
+    margin-top: 50px;
+  }
 `;
 
 const Img = styled.img`
