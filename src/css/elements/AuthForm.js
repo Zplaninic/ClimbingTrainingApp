@@ -1,20 +1,40 @@
 import styled from "styled-components";
+import { device } from "./../device";
+
+const AuthContainer = styled.div`
+  margin-top: 50px;
+  @media ${device.laptop} {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    margin-top: 0px;
+  }
+`;
+
+const ErrorTag = styled.p`
+  text-align: center;
+  margin: 10px;
+  color: #ff5b57;
+`;
 
 const Card = styled.div`
-  max-width: 410px;
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media ${device.laptop} {
+    grid-column-start: 2;
+    grid-column-end: 4;
+  }
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin-top: 150px;
+  width: 300px;
+  margin-top: 100px;
 `;
 
 const Input = styled.input`
@@ -65,6 +85,8 @@ const SocialButtonImage = styled.img`
 `;
 
 export {
+  AuthContainer,
+  ErrorTag,
   Form,
   Input,
   Button,

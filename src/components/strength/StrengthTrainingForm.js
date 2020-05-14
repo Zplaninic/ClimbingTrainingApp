@@ -153,7 +153,7 @@ const StrengthTrainingForm = props => {
             </InputRow>
           </FormGroup>
           <ButtonContainer>
-            <Button type="submit">Add Route</Button>
+            <Button type="submit">Add Exercise</Button>
           </ButtonContainer>
         </InputTraining>
       </Form>
