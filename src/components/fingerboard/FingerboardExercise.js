@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { updateMongo, deleteFromMongo } from "./../../utils/db";
 import styled from "styled-components";
+import { device } from "./../../css/device";
 
 const FingerboardExercise = props => {
   const {
@@ -30,7 +31,7 @@ const FingerboardExercise = props => {
 
   return (
     <TableRow className="fingerBoardExercise">
-      <TableCell>
+      <TableCell cellTitle="Date">
         <CellInput
           type="text"
           name="date"
@@ -38,7 +39,7 @@ const FingerboardExercise = props => {
           onChange={handleChange}
         />
       </TableCell>
-      <TableCell>
+      <TableCell cellTitle="Sets number">
         <CellInput
           type="text"
           name="setsNumber"
@@ -46,7 +47,7 @@ const FingerboardExercise = props => {
           onChange={handleChange}
         />
       </TableCell>
-      <TableCell>
+      <TableCell cellTitle="Work interval">
         <CellInput
           type="text"
           name="workInterval"
@@ -54,7 +55,7 @@ const FingerboardExercise = props => {
           onChange={handleChange}
         />
       </TableCell>
-      <TableCell>
+      <TableCell cellTitle="Rest time">
         <CellInput
           type="text"
           name="restInterval"
@@ -62,7 +63,7 @@ const FingerboardExercise = props => {
           onChange={handleChange}
         />
       </TableCell>
-      <TableCell>
+      <TableCell cellTitle="Pause between sets">
         <CellInput
           type="text"
           name="pauseBetweenSets"
@@ -70,7 +71,7 @@ const FingerboardExercise = props => {
           onChange={handleChange}
         />
       </TableCell>
-      <ButtonCell>
+      <ButtonCell className="last">
         <RemoveButton
           onClick={() =>
             deleteFromMongo(
@@ -88,26 +89,59 @@ const FingerboardExercise = props => {
 };
 
 const TableRow = styled.div`
-  width: 100%;
-  display: table-row;
+  display: flex;
+  flex-direction: column;
+
+  @media ${device.laptop} {
+    width: 100%;
+    display: table-row;
+  }
 `;
 
 const TableCell = styled.div`
-  display: table-cell;
   border-right: 1px solid #e4e7ea;
   border-top: 1px solid #e4e7ea;
+
+  &:before {
+    ${props => {
+      return `content: "${props.cellTitle}"; 
+              font-size: 12px;
+              color: #00acac;
+              line-height: 1.2;
+              text-transform: uppercase;
+              font-weight: unset!important;
+              margin-top: 10px;
+              margin-left: 20px;
+              min-width: 98px;
+              display: block;`;
+    }}
+  }
+
+  @media ${device.laptop} {
+    display: table-cell;
+
+    &:before {
+      content: none;
+    }
+  }
 `;
 
 const CellInput = styled.input`
   border: none;
   font-family: "Montserrat", sans-serif;
-  width: 100%;
   font-size: 13px;
-  color: #4e5c68;
+  width: 100%;
   line-height: 1.2;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+
+  @media ${device.laptop} {
+    color: #4e5c68;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+  }
 `;
 
 const RemoveButton = styled.button`
@@ -122,12 +156,28 @@ const RemoveButton = styled.button`
   margin: 5px;
   height: 25px;
   width: 25px;
+  margin-left: 15px;
+
+  @media ${device.laptop} {
+    margin-left: 5px;
+  }
 `;
 
 const ButtonCell = styled.div`
-  display: table-cell;
   background-color: #ffffff;
   border-top: 1px solid #e4e7ea;
+
+  &.last {
+    border-bottom: 4px solid #e4e7ea;
+  }
+
+  @media ${device.laptop} {
+    display: table-cell;
+
+    &.last {
+      border-bottom: none;
+    }
+  }
 `;
 
 FingerboardExercise.propTypes = {
