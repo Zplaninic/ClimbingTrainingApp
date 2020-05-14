@@ -32,8 +32,16 @@ const App = () => {
               <Home {...props} open={open} setOpen={setOpen} node={node} />
             )}
           />
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} />
+          <Route
+            path="/login"
+            render={props => <Login {...props} open={open} setOpen={setOpen} />}
+          />
+          <Route
+            path="/signup"
+            render={props => (
+              <Signup {...props} open={open} setOpen={setOpen} />
+            )}
+          />
           <PrivateRoute
             exact
             path="/climbing"
