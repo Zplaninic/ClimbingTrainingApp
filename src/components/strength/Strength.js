@@ -5,9 +5,10 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import Countdown from "./../tools/Countdown";
 import StrengthTable from "./StrengthTable";
+import { device } from "./../../css/device";
 
-const Strength = props => {
-  const path = props.location.pathname;
+const Strength = ({ location, open, setOpen, node }) => {
+  const path = location.pathname;
   const [isUpdatedFromDatabase, setIsUpdatedFromDatabase] = useState(false);
 
   useEffect(() => {
@@ -16,8 +17,9 @@ const Strength = props => {
 
   return (
     <React.Fragment>
-      <TrainingPicker path={path} />
-      <TrainingContainer className="container">
+      <TrainingPicker path={path} open={open} setOpen={setOpen} />
+
+      <TrainingContainer className="container" ref={node}>
         <TrainingContent className="strength-training">
           <StrengthTrainingForm
             setIsUpdatedFromDatabase={setIsUpdatedFromDatabase}
@@ -39,11 +41,15 @@ const Strength = props => {
 };
 
 const TableTraining = styled.div`
-  grid-row-start: 2;
-  grid-row-end: 3;
-  grid-column-start: 2;
-  grid-column-end: 4;
-  padding: 20px 20px 20px 0px;
+  width: 100%;
+  order: 3;
+  @media ${device.laptop} {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    grid-column-end: 4;
+    padding: 20px 20px 20px 0px;
+  }
 `;
 
 const TrainingContainer = styled.div`
@@ -51,17 +57,26 @@ const TrainingContainer = styled.div`
 `;
 
 const TimerContainer = styled.div`
-  grid-column-start: 3;
-  grid-column-end: 6;
-  padding: 20px;
+  order: 1;
+  margin: 10px;
+  @media ${device.laptop} {
+    grid-column-start: 3;
+    grid-column-end: 6;
+    padding: 20px;
+  }
 `;
 
 const TrainingContent = styled.div`
-  padding-bottom: 2.5rem;
-  display: grid;
-  grid-template-columns: 200px 1fr 0.5fr 0.25fr 0.25fr;
-  grid-template-rows: 450px auto 30px;
-  grid-gap: 2em;
+  display: flex;
+  flex-direction: column;
+
+  @media ${device.laptop} {
+    padding-bottom: 2.5rem;
+    display: grid;
+    grid-template-columns: 200px 1fr 0.5fr 0.25fr 0.25fr;
+    grid-template-rows: 450px auto 30px;
+    grid-gap: 2em;
+  }
 `;
 
 Strength.propTypes = {

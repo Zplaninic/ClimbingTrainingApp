@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { deleteFromMongo, updateMongo } from "./../../utils/db";
 import styled from "styled-components";
+import { device } from "./../../css/device";
 
 const StrengthExercise = props => {
   const { date, muscles, type, sets, reps, rest } = props.exerciseDetails;
@@ -22,7 +23,7 @@ const StrengthExercise = props => {
 
   return (
     <TableRow className="exercise">
-      <TableCell>
+      <TableCell cellTitle="Date">
         <CellInput
           type="text"
           name="date"
@@ -30,7 +31,7 @@ const StrengthExercise = props => {
           value={date}
         />
       </TableCell>
-      <TableCell>
+      <TableCell cellTitle="Type of muscles">
         <CellInput
           type="text"
           name="muscles"
@@ -38,7 +39,7 @@ const StrengthExercise = props => {
           value={muscles}
         />
       </TableCell>
-      <TableCell>
+      <TableCell cellTitle="Name exercises">
         <CellInput
           type="text"
           name="type"
@@ -46,7 +47,7 @@ const StrengthExercise = props => {
           value={type}
         />
       </TableCell>
-      <TableCell>
+      <TableCell cellTitle="Sets number">
         <CellInput
           type="text"
           name="sets"
@@ -54,7 +55,7 @@ const StrengthExercise = props => {
           value={sets}
         />
       </TableCell>
-      <TableCell>
+      <TableCell cellTitle="Repetitions">
         <CellInput
           type="text"
           name="reps"
@@ -62,7 +63,7 @@ const StrengthExercise = props => {
           value={reps}
         />
       </TableCell>
-      <TableCell>
+      <TableCell cellTitle="Rest (s)">
         <CellInput
           type="text"
           name="rest"
@@ -70,7 +71,7 @@ const StrengthExercise = props => {
           value={rest}
         />
       </TableCell>
-      <ButtonCell>
+      <ButtonCell className="last">
         <RemoveButton
           onClick={() =>
             deleteFromMongo(
@@ -88,26 +89,59 @@ const StrengthExercise = props => {
 };
 
 const TableRow = styled.div`
-  width: 100%;
-  display: table-row;
+  display: flex;
+  flex-direction: column;
+
+  @media ${device.laptop} {
+    width: 100%;
+    display: table-row;
+  }
 `;
 
 const TableCell = styled.div`
-  display: table-cell;
   border-right: 1px solid #e4e7ea;
   border-top: 1px solid #e4e7ea;
+
+  &:before {
+    ${props => {
+      return `content: "${props.cellTitle}"; 
+              font-size: 12px;
+              color: #00acac;
+              line-height: 1.2;
+              text-transform: uppercase;
+              font-weight: unset!important;
+              margin-top: 10px;
+              margin-left: 20px;
+              min-width: 98px;
+              display: block;`;
+    }}
+  }
+
+  @media ${device.laptop} {
+    display: table-cell;
+
+    &:before {
+      content: none;
+    }
+  }
 `;
 
 const CellInput = styled.input`
   border: none;
   font-family: "Montserrat", sans-serif;
-  width: 100%;
   font-size: 13px;
-  color: #4e5c68;
+  width: 100%;
   line-height: 1.2;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+
+  @media ${device.laptop} {
+    color: #4e5c68;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+  }
 `;
 
 const RemoveButton = styled.button`
@@ -122,12 +156,28 @@ const RemoveButton = styled.button`
   margin: 5px;
   height: 25px;
   width: 25px;
+  margin-left: 15px;
+
+  @media ${device.laptop} {
+    margin-left: 5px;
+  }
 `;
 
 const ButtonCell = styled.div`
-  display: table-cell;
   background-color: #ffffff;
   border-top: 1px solid #e4e7ea;
+
+  &.last {
+    border-bottom: 4px solid #e4e7ea;
+  }
+
+  @media ${device.laptop} {
+    display: table-cell;
+
+    &.last {
+      border-bottom: none;
+    }
+  }
 `;
 
 StrengthExercise.propTypes = {
