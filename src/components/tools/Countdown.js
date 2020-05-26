@@ -1,13 +1,20 @@
 import React, { Component } from "react";
 import "../../css/countdown.css";
-import Button from "../../css/elements/Button";
+import Button, { CountdownButtons } from "../../css/elements/Button";
+import UIfx from "uifx";
+import countdownAlarm from "../../assets/sounds/countdownAlarm.mp3";
+
+const endCountdown = new UIfx(countdownAlarm, {
+  volume: 1.0,
+  throttleMs: 40
+});
+
 class Countdown extends Component {
   state = {
     timerOn: false,
     timerStart: 0,
     timerTime: 0,
-    setsStart: 0,
-    setsTime: 0
+    startButtonClicked: false
   };
 
   startTimer = () => {
@@ -15,7 +22,7 @@ class Countdown extends Component {
       timerOn: true,
       timerTime: this.state.timerTime,
       timerStart: this.state.timerTime,
-      setsStart: this.state.setsTime
+      startButtonClicked: true
     });
     do {
       this.timer = setInterval(() => {
@@ -25,18 +32,16 @@ class Countdown extends Component {
             timerTime: newTime
           });
         } else {
+          endCountdown.play();
+          this.stopTimer();
           this.setState({
             timerOn: false,
             timerTime: this.state.timerStart,
-            setsTime: this.state.setsTime - 1
+            startButtonClicked: false
           });
         }
       }, 10);
-    } while (
-      this.state.setsStart !== 0 &&
-      this.state.setsStart > 0 &&
-      this.state.setsTime >= 0
-    );
+    } while (this.state.timerTime === 0 && this.state.timerOn === false);
   };
 
   stopTimer = () => {
@@ -50,7 +55,7 @@ class Countdown extends Component {
       this.setState({
         timerStart: 0,
         timerTime: 0,
-        setsTime: 0
+        startButtonClicked: false
       });
     }
   };
@@ -72,7 +77,7 @@ class Countdown extends Component {
   };
 
   render() {
-    const { timerOn, timerStart, timerTime } = this.state;
+    const { timerOn, timerStart, timerTime, startButtonClicked } = this.state;
     let seconds = ("0" + (Math.floor((timerTime / 1000) % 60) % 60)).slice(-2);
     let minutes = ("0" + Math.floor((timerTime / 60000) % 60)).slice(-2);
 
@@ -80,43 +85,55 @@ class Countdown extends Component {
       <div className="Countdown">
         <div className="Countdown-header">Work Interval</div>
         <div className="Countdown-label">Minutes : Seconds</div>
-        <div className="Countdown-display">
-          <Button onClick={() => this.adjustTimer("incMinutes")}>
-            &#8679;
-          </Button>
-          <Button onClick={() => this.adjustTimer("incSeconds")}>
-            &#8679;
-          </Button>
+        <div className="Countdown-content">
+          <div className="Countdown-display">
+            <Button onClick={() => this.adjustTimer("incMinutes")}>
+              &#8679;
+            </Button>
+            <Button onClick={() => this.adjustTimer("incSeconds")}>
+              &#8679;
+            </Button>
 
-          <div className="Countdown-time">
-            {minutes} : {seconds}
+            <div className="Countdown-time">
+              {minutes} : {seconds}
+            </div>
+
+            <Button onClick={() => this.adjustTimer("decMinutes")}>
+              &#8681;
+            </Button>
+            <Button onClick={() => this.adjustTimer("decSeconds")}>
+              &#8681;
+            </Button>
           </div>
-
-          <Button onClick={() => this.adjustTimer("decMinutes")}>
-            &#8681;
-          </Button>
-          <Button onClick={() => this.adjustTimer("decSeconds")}>
-            &#8681;
-          </Button>
+          <div className="Buttons-display">
+            {timerOn === false &&
+              timerTime !== 0 &&
+              startButtonClicked === false && (
+                <CountdownButtons onClick={this.startTimer}>
+                  Start
+                </CountdownButtons>
+              )}
+            {timerOn === true && timerTime >= 1000 && (
+              <CountdownButtons onClick={this.stopTimer}>Stop</CountdownButtons>
+            )}
+            {timerOn === false &&
+              timerStart !== 0 &&
+              timerStart !== timerTime &&
+              timerTime !== 0 &&
+              startButtonClicked === true && (
+                <b>
+                  <CountdownButtons onClick={this.startTimer}>
+                    Resume
+                  </CountdownButtons>
+                </b>
+              )}
+            {timerOn === false && timerTime !== 0 && (
+              <CountdownButtons onClick={this.resetTimer}>
+                Reset
+              </CountdownButtons>
+            )}
+          </div>
         </div>
-        {timerOn === false && timerStart === 0 && (
-          <Button onClick={this.startTimer}>Start</Button>
-        )}
-        {timerOn === true && timerTime >= 1000 && (
-          <Button onClick={this.stopTimer}>Stop</Button>
-        )}
-        {timerOn === false &&
-          timerStart !== 0 &&
-          timerStart !== timerTime &&
-          timerTime !== 0 && (
-            <b>
-              <Button onClick={this.startTimer}>Resume</Button>
-            </b>
-          )}
-        {/* {(timerOn === false || timerTime < 1000) &&
-					(timerStart !== timerTime && timerStart > 0) && (
-						<button onClick={this.resetTimer}>Reset</button>
-				)} */}
       </div>
     );
   }
