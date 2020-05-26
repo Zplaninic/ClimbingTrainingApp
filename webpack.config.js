@@ -12,6 +12,14 @@ module.exports = {
         use: {
           loader: "url-loader"
         }
+      },
+      {
+        test: /\.mp3$/,
+        use: [
+          {
+            loader: "file-loader"
+          }
+        ]
       }
     ]
   }

@@ -14,10 +14,18 @@
     margin-right: 30px;
     padding: 20px;
   }
-
 }
 
+.Countdown-content {
+  display:flex;
+}
 
+.Buttons-display {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .Countdown {
   padding-top: 10px;
 }
@@ -28,8 +36,9 @@
 }
 
 .Countdown-display {
-  margin-top: 5px;
-  margin-bottom: 20px;
+  /* margin-top: 5px;
+  margin-bottom: 20px; */
+  width: 50%;
 }
 
 .Countdown-display button:hover {
